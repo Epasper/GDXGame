@@ -58,7 +58,7 @@ public class Controls {
             marioXPos -= marioSpeed;
             mario.getCoordinates().setxPosition(marioXPos);
         }
-        if (marioXPos > game.levelWidth*2) {
+        if (marioXPos > game.levelWidth*4) {
             //youWin = true;
             marioXPos = game.levelWidth;
             mario.getCoordinates().setxPosition(marioXPos);

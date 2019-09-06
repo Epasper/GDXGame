@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class MyGame extends Game {
 
@@ -19,6 +21,8 @@ public class MyGame extends Game {
     BitmapFont font;
     Texture backgroundTexture;
     Texture groundTileTexture;
+    World world;
+    //Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
     Sprite backgroundSprite;
 
@@ -28,6 +32,7 @@ public class MyGame extends Game {
 
     @Override
     public void create() {
+        world = new World(new Vector2(0,-10),true);
         gameBatch = new SpriteBatch();
         screensBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();

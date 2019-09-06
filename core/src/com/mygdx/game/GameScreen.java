@@ -9,12 +9,18 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GameScreen extends ScreenAdapter {
 
+    private final float timeStep = 1 / 60f;
+    private final int velocityIterations = 6;
+    private final int positionIterations = 2;
+
     private MyGame game;
     private Controls controls;
 
     private float circleX = 300;
     private float circleY = 150;
     private float circleRadius = 50;
+
+    private float accumulator = 0;
 
     public GameScreen(MyGame game) {
         this.game = game;
@@ -46,6 +52,21 @@ public class GameScreen extends ScreenAdapter {
         setCamera();
 
         drawAFrame();
+
+        //game.debugRenderer.render(game.world, game.camera.combined);
+
+        doPhysicsStep(delta);
+
+    }
+
+    private void doPhysicsStep(float deltaTime) {
+
+        float frameTime = Math.min(deltaTime, 0.25f);
+        accumulator += frameTime;
+        while (accumulator >= timeStep) {
+            game.world.step(timeStep, velocityIterations, positionIterations);
+            accumulator -= timeStep;
+        }
     }
 
     private void drawAFrame() {
