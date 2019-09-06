@@ -14,6 +14,7 @@ public class MyGame extends Game {
 
     ShapeRenderer shapeRenderer;
     OrthographicCamera camera;
+    ShapeFactory shapeFactory;
 
     Body mainCharacterBody;
 
@@ -29,7 +30,6 @@ public class MyGame extends Game {
     int levelHeight = 36;
     int levelWidth = 48;
 
-
     @Override
     public void create() {
         debugRenderer = new Box2DDebugRenderer();
@@ -44,11 +44,9 @@ public class MyGame extends Game {
         camera.update();
         backgroundTexture = new Texture(Gdx.files.internal("background_image.jpg"));
         groundTileTexture = new Texture(Gdx.files.internal("GroundTile.png"));
-        // ground
         createEdge(BodyDef.BodyType.StaticBody, -2, 5f, 300, 5f, 0);
         playerCharacter = new PlayerCharacter(this);
         mainCharacterBody = playerCharacter.body;
-
     }
 
     private Body createEdge(BodyDef.BodyType type, float x1, float y1, float x2, float y2, float density) {

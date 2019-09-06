@@ -9,10 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GameScreen extends ScreenAdapter {
 
-    private final float timeStep = 1 / 60f;
-    private final int velocityIterations = 6;
-    private final int positionIterations = 2;
-
     private MyGame game;
     private Controls controls;
 
@@ -59,21 +55,7 @@ public class GameScreen extends ScreenAdapter {
 
         controls.resetTheXVelocities();
 
-        //doPhysicsStep(delta);
-
     }
-
-
-
-/*    private void doPhysicsStep(float deltaTime) {
-
-        float frameTime = Math.min(deltaTime, 0.25f);
-        accumulator += frameTime;
-        while (accumulator >= timeStep) {
-            game.world.step(timeStep, velocityIterations, positionIterations);
-            accumulator -= timeStep;
-        }
-    }*/
 
     private void drawAFrame() {
         Sprite region = new Sprite(game.backgroundTexture);
@@ -90,10 +72,7 @@ public class GameScreen extends ScreenAdapter {
                 game.playerCharacter.playerSprite.getY()-2f, 4f, 4f);
 
         game.gameBatch.end();
-/*        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        game.shapeRenderer.setColor(0, 1, 0, 1);
-        game.shapeRenderer.circle(controls.playerCharacter.getCoordinates().getxPosition(), controls.playerCharacter.getCoordinates().getyPosition(), 20);
-        game.shapeRenderer.end();*/
+
     }
 
     private void clearScreen() {
