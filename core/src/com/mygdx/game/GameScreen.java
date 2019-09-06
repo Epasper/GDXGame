@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameScreen extends ScreenAdapter {
@@ -45,6 +44,7 @@ public class GameScreen extends ScreenAdapter {
     public void render(float delta) {
 
         controls.addTheKeyInput();
+
         controls.manageCameraControls();
 
         clearScreen();
@@ -53,13 +53,20 @@ public class GameScreen extends ScreenAdapter {
 
         drawAFrame();
 
-        //game.debugRenderer.render(game.world, game.camera.combined);
+        game.debugRenderer.render(game.world, game.camera.combined);
+        game.world.step(1 / 60f, 6, 2);
 
-        doPhysicsStep(delta);
+        resetTheXVelocities();
+
+        //doPhysicsStep(delta);
 
     }
 
-    private void doPhysicsStep(float deltaTime) {
+    private void resetTheXVelocities() {
+        game.mainCharacterBody.setLinearVelocity(0,game.mainCharacterBody.getLinearVelocity().y);
+    }
+
+/*    private void doPhysicsStep(float deltaTime) {
 
         float frameTime = Math.min(deltaTime, 0.25f);
         accumulator += frameTime;
@@ -67,7 +74,7 @@ public class GameScreen extends ScreenAdapter {
             game.world.step(timeStep, velocityIterations, positionIterations);
             accumulator -= timeStep;
         }
-    }
+    }*/
 
     private void drawAFrame() {
         game.gameBatch.begin();
@@ -77,10 +84,10 @@ public class GameScreen extends ScreenAdapter {
         }
         game.gameBatch.end();
 
-        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+/*        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         game.shapeRenderer.setColor(0, 1, 0, 1);
-        game.shapeRenderer.circle(controls.mario.getCoordinates().getxPosition(), controls.mario.getCoordinates().getyPosition(), 20);
-        game.shapeRenderer.end();
+        game.shapeRenderer.circle(controls.playerCharacter.getCoordinates().getxPosition(), controls.playerCharacter.getCoordinates().getyPosition(), 20);
+        game.shapeRenderer.end();*/
     }
 
     private void clearScreen() {

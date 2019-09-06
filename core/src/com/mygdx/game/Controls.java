@@ -2,29 +2,33 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 
 public class Controls {
 
     private MyGame game;
+    PlayerCharacter playerCharacter;
+
 
     Controls(MyGame game) {
         this.game = game;
+        playerCharacter = new PlayerCharacter(game);
     }
 
-    MarioCharacter mario = new MarioCharacter();
     private final float startingJumpSpeed = 10;
-    private float marioJumpSpeed = startingJumpSpeed;
+    private float playerCharacterJumpingSpeed = startingJumpSpeed;
     private boolean youWin;
     private float marioSpeed = 5f;
     private final int baseGroundLevel = 70;
+    private final int maxVelocity = 100;
 
     void manageCameraControls() {
-        float cameraSpeedX = game.levelWidth/2f + 60;
+        float cameraSpeedX = game.levelWidth / 2f + 60;
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            game.camera.translate(0, game.levelHeight/2f * Gdx.graphics.getDeltaTime());
+            game.camera.translate(0, game.levelHeight / 2f * Gdx.graphics.getDeltaTime());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            game.camera.translate(0, -game.levelHeight/2f * Gdx.graphics.getDeltaTime());
+            game.camera.translate(0, -game.levelHeight / 2f * Gdx.graphics.getDeltaTime());
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -41,43 +45,49 @@ public class Controls {
     }
 
     void addTheKeyInput() {
-        float marioXPos = mario.getCoordinates().getxPosition();
-        float marioYPos = mario.getCoordinates().getyPosition();
+        float marioXPos = playerCharacter.getCoordinates().getxPosition();
+        float marioYPos = playerCharacter.getCoordinates().getyPosition();
 
-        if (mario.isJump()) {
-            float marioAcceleration = 0.25f;
-            marioJumpSpeed -= marioAcceleration;
-            marioYPos += marioJumpSpeed;
-            mario.getCoordinates().setyPosition(marioYPos);
-        }
+        Vector2 playerVelocity = game.mainCharacterBody.getLinearVelocity();
+        Vector2 playerPosition = game.mainCharacterBody.getPosition();
+
+/*        if (playerCharacter.isJump()) {
+*//*            float marioAcceleration = 0.25f;
+            playerCharacterJumpingSpeed -= marioAcceleration;
+            marioYPos += playerCharacterJumpingSpeed;
+            playerCharacter.getCoordinates().setyPosition(marioYPos);*//*
+        }*/
 
         if (marioXPos < baseGroundLevel) {
             marioXPos = baseGroundLevel;
-            mario.getCoordinates().setxPosition(marioXPos);
+            playerCharacter.getCoordinates().setxPosition(marioXPos);
         } else if (Gdx.input.isKeyPressed(Input.Keys.A) || (Gdx.input.isKeyPressed(Input.Keys.LEFT))) {
-            marioXPos -= marioSpeed;
-            mario.getCoordinates().setxPosition(marioXPos);
+            game.mainCharacterBody.setLinearVelocity(-maxVelocity, playerVelocity.y);
+/*            marioXPos -= marioSpeed;
+            playerCharacter.getCoordinates().setxPosition(marioXPos);*/
         }
-        if (marioXPos > game.levelWidth*4) {
+        if (marioXPos > game.levelWidth * 4) {
             //youWin = true;
             marioXPos = game.levelWidth;
-            mario.getCoordinates().setxPosition(marioXPos);
+            playerCharacter.getCoordinates().setxPosition(marioXPos);
             game.setScreen(new YouWinScreen(game));
         } else if (Gdx.input.isKeyPressed(Input.Keys.D) || (Gdx.input.isKeyPressed(Input.Keys.RIGHT))) {
-            marioXPos += marioSpeed;
-            mario.getCoordinates().setxPosition(marioXPos);
+            game.mainCharacterBody.setLinearVelocity(maxVelocity, playerVelocity.y);
+/*            marioXPos += marioSpeed;
+            playerCharacter.getCoordinates().setxPosition(marioXPos);*/
         }
-        if (mario.getCoordinates().getyPosition() < baseGroundLevel) {
-            marioJumpSpeed = startingJumpSpeed;
-            mario.setJump(false);
+        if (playerCharacter.getCoordinates().getyPosition() < baseGroundLevel) {
+            playerCharacterJumpingSpeed = startingJumpSpeed;
+            playerCharacter.setJump(false);
             marioYPos = baseGroundLevel;
-            mario.getCoordinates().setyPosition(marioYPos);
+            playerCharacter.getCoordinates().setyPosition(marioYPos);
         }
         if (marioYPos > game.levelHeight) {
             marioYPos = game.levelHeight;
-            mario.getCoordinates().setyPosition(marioYPos);
+            playerCharacter.getCoordinates().setyPosition(marioYPos);
         } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.W) || (Gdx.input.isKeyPressed(Input.Keys.UP))) {
-            mario.setJump(true);
+            playerCharacter.setJump(true);
+            game.mainCharacterBody.setLinearVelocity(playerVelocity.x, 2*maxVelocity);
         }
     }
 }
