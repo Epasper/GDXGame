@@ -16,6 +16,7 @@ public class Controls {
     private float marioJumpSpeed = startingJumpSpeed;
     private boolean youWin;
     private float marioSpeed = 5f;
+    private final int baseGroundLevel = 70;
 
     void manageCameraControls() {
         float cameraSpeedX = game.levelWidth/2f + 60;
@@ -50,8 +51,8 @@ public class Controls {
             mario.getCoordinates().setyPosition(marioYPos);
         }
 
-        if (marioXPos < 0) {
-            marioXPos = 0;
+        if (marioXPos < baseGroundLevel) {
+            marioXPos = baseGroundLevel;
             mario.getCoordinates().setxPosition(marioXPos);
         } else if (Gdx.input.isKeyPressed(Input.Keys.A) || (Gdx.input.isKeyPressed(Input.Keys.LEFT))) {
             marioXPos -= marioSpeed;
@@ -66,10 +67,10 @@ public class Controls {
             marioXPos += marioSpeed;
             mario.getCoordinates().setxPosition(marioXPos);
         }
-        if (mario.getCoordinates().getyPosition() < 0) {
+        if (mario.getCoordinates().getyPosition() < baseGroundLevel) {
             marioJumpSpeed = startingJumpSpeed;
             mario.setJump(false);
-            marioYPos = 0;
+            marioYPos = baseGroundLevel;
             mario.getCoordinates().setyPosition(marioYPos);
         }
         if (marioYPos > game.levelHeight) {

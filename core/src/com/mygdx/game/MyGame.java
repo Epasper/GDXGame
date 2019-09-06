@@ -17,7 +17,8 @@ public class MyGame extends Game {
     SpriteBatch gameBatch;
     SpriteBatch screensBatch;
     BitmapFont font;
-    Texture texture;
+    Texture backgroundTexture;
+    Texture groundTileTexture;
 
     Sprite backgroundSprite;
 
@@ -35,7 +36,8 @@ public class MyGame extends Game {
         camera = new OrthographicCamera(levelWidth, levelHeight);
         camera.position.set(levelWidth/2f, levelHeight/2f, 0);
         camera.update();
-        texture = new Texture(Gdx.files.internal("background_image.jpg"));
+        backgroundTexture = new Texture(Gdx.files.internal("background_image.jpg"));
+        groundTileTexture = new Texture(Gdx.files.internal("GroundTile.png"));
     }
 
 
@@ -45,6 +47,6 @@ public class MyGame extends Game {
         shapeRenderer.dispose();
         gameBatch.dispose();
         screensBatch.dispose();
-        texture.dispose();
+        backgroundTexture.dispose();
     }
 }
