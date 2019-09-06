@@ -20,7 +20,7 @@ public class Controls {
     private boolean youWin;
     private float marioSpeed = 5f;
     private final int baseGroundLevel = 70;
-    private final int maxVelocity = 100;
+    private final int maxVelocity = 75;
 
     void manageCameraControls() {
         float cameraSpeedX = game.levelWidth / 2f + 60;
@@ -51,8 +51,8 @@ public class Controls {
         Vector2 playerVelocity = game.mainCharacterBody.getLinearVelocity();
         Vector2 playerPosition = game.mainCharacterBody.getPosition();
 
-/*        if (playerCharacter.isJump()) {
-*//*            float marioAcceleration = 0.25f;
+        /*        if (playerCharacter.isJump()) {
+         *//*            float marioAcceleration = 0.25f;
             playerCharacterJumpingSpeed -= marioAcceleration;
             marioYPos += playerCharacterJumpingSpeed;
             playerCharacter.getCoordinates().setyPosition(marioYPos);*//*
@@ -82,12 +82,17 @@ public class Controls {
             marioYPos = baseGroundLevel;
             playerCharacter.getCoordinates().setyPosition(marioYPos);
         }
-        if (marioYPos > game.levelHeight) {
+        /*if (marioYPos > game.levelHeight) {
             marioYPos = game.levelHeight;
             playerCharacter.getCoordinates().setyPosition(marioYPos);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.W) || (Gdx.input.isKeyPressed(Input.Keys.UP))) {
-            playerCharacter.setJump(true);
-            game.mainCharacterBody.setLinearVelocity(playerVelocity.x, 2*maxVelocity);
+        } else*/
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.W) || (Gdx.input.isKeyPressed(Input.Keys.UP))) {
+            //playerCharacter.setJump(true);
+            /*game.mainCharacterBody.applyLinearImpulse(0, 500,
+                    game.mainCharacterBody.getPosition().x,
+                    game.mainCharacterBody.getPosition().y,
+                    true);*/
+            game.mainCharacterBody.setLinearVelocity(playerVelocity.x,  maxVelocity);
         }
     }
 }

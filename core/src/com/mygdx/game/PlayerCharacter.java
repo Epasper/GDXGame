@@ -28,7 +28,7 @@ public class PlayerCharacter {
 
     public void initializePhysicalBody() {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(100, 300);
+        bodyDef.position.set(10, 30);
 
         circle.setRadius(6f);
 

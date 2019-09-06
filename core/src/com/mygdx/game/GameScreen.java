@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameScreen extends ScreenAdapter {
@@ -63,7 +64,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void resetTheXVelocities() {
-        game.mainCharacterBody.setLinearVelocity(0,game.mainCharacterBody.getLinearVelocity().y);
+        game.mainCharacterBody.setLinearVelocity(0, game.mainCharacterBody.getLinearVelocity().y);
     }
 
 /*    private void doPhysicsStep(float deltaTime) {
@@ -77,10 +78,13 @@ public class GameScreen extends ScreenAdapter {
     }*/
 
     private void drawAFrame() {
+        Sprite region = new Sprite(game.backgroundTexture);
+        region.setScale(0.01f);
         game.gameBatch.begin();
-        game.gameBatch.draw(game.backgroundTexture, 0, 0);
+        game.gameBatch.draw(region, 0, 0, 356.8f, 106.7f);
+
         for (int i = 0; i < 10; i++) {
-            game.gameBatch.draw(game.groundTileTexture, -40 + (i * 230), 0);
+            game.gameBatch.draw(game.groundTileTexture, -4f + (i * 23f), 0f, 23f, 7.5f);
         }
         game.gameBatch.end();
 

@@ -25,14 +25,14 @@ public class MyGame extends Game {
     World world;
     Box2DDebugRenderer debugRenderer;
 
-    int levelHeight = 360;
-    int levelWidth = 480;
+    int levelHeight = 36;
+    int levelWidth = 48;
 
 
     @Override
     public void create() {
         debugRenderer = new Box2DDebugRenderer();
-        world = new World(new Vector2(0, -100), true);
+        world = new World(new Vector2(0, -200), true);
         gameBatch = new SpriteBatch();
         screensBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -44,9 +44,9 @@ public class MyGame extends Game {
         backgroundTexture = new Texture(Gdx.files.internal("background_image.jpg"));
         groundTileTexture = new Texture(Gdx.files.internal("GroundTile.png"));
         // ground
-        createEdge(BodyDef.BodyType.StaticBody, -20, 50f, 300, 50f, 0);
+        createEdge(BodyDef.BodyType.StaticBody, -2, 5f, 300, 5f, 0);
 
-        mainCharacterBody = createCircle(BodyDef.BodyType.DynamicBody, 0, 100, 20, 100);
+        mainCharacterBody = createCircle(BodyDef.BodyType.DynamicBody, 0, 100, 1, 5);
 
     }
 
