@@ -57,15 +57,13 @@ public class GameScreen extends ScreenAdapter {
         game.debugRenderer.render(game.world, game.camera.combined);
         game.world.step(1 / 60f, 6, 2);
 
-        resetTheXVelocities();
+        controls.resetTheXVelocities();
 
         //doPhysicsStep(delta);
 
     }
 
-    private void resetTheXVelocities() {
-        game.mainCharacterBody.setLinearVelocity(0, game.mainCharacterBody.getLinearVelocity().y);
-    }
+
 
 /*    private void doPhysicsStep(float deltaTime) {
 
@@ -79,15 +77,19 @@ public class GameScreen extends ScreenAdapter {
 
     private void drawAFrame() {
         Sprite region = new Sprite(game.backgroundTexture);
-        region.setScale(0.01f);
         game.gameBatch.begin();
         game.gameBatch.draw(region, 0, 0, 356.8f, 106.7f);
 
         for (int i = 0; i < 10; i++) {
             game.gameBatch.draw(game.groundTileTexture, -4f + (i * 23f), 0f, 23f, 7.5f);
         }
-        game.gameBatch.end();
 
+        game.playerCharacter.playerSprite.setPosition(game.playerCharacter.body.getPosition().x, game.playerCharacter.body.getPosition().y);
+        game.gameBatch.draw(game.playerCharacter.playerSprite,
+                game.playerCharacter.playerSprite.getX()-2f,
+                game.playerCharacter.playerSprite.getY()-2f, 4f, 4f);
+
+        game.gameBatch.end();
 /*        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         game.shapeRenderer.setColor(0, 1, 0, 1);
         game.shapeRenderer.circle(controls.playerCharacter.getCoordinates().getxPosition(), controls.playerCharacter.getCoordinates().getyPosition(), 20);

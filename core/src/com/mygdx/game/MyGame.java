@@ -24,6 +24,7 @@ public class MyGame extends Game {
     Texture groundTileTexture;
     World world;
     Box2DDebugRenderer debugRenderer;
+    PlayerCharacter playerCharacter;
 
     int levelHeight = 36;
     int levelWidth = 48;
@@ -45,23 +46,9 @@ public class MyGame extends Game {
         groundTileTexture = new Texture(Gdx.files.internal("GroundTile.png"));
         // ground
         createEdge(BodyDef.BodyType.StaticBody, -2, 5f, 300, 5f, 0);
+        playerCharacter = new PlayerCharacter(this);
+        mainCharacterBody = playerCharacter.body;
 
-        mainCharacterBody = createCircle(BodyDef.BodyType.DynamicBody, 0, 100, 1, 5);
-
-    }
-
-    private Body createBox(BodyDef.BodyType type, float x, float y, float width, float height, float density) {
-        PolygonShape poly = new PolygonShape();
-        poly.setAsBox(width, height);
-
-        BodyDef def = new BodyDef();
-        def.type = type;
-        Body body = world.createBody(def);
-        body.createFixture(poly, density);
-        body.setTransform(x, y, 0);
-        poly.dispose();
-
-        return body;
     }
 
     private Body createEdge(BodyDef.BodyType type, float x1, float y1, float x2, float y2, float density) {
@@ -73,20 +60,6 @@ public class MyGame extends Game {
         Body body = world.createBody(def);
         body.createFixture(poly, density);
         body.setTransform(x1, y1, 0);
-        poly.dispose();
-
-        return body;
-    }
-
-    private Body createCircle(BodyDef.BodyType type, float x, float y, float radius, float density) {
-        CircleShape poly = new CircleShape();
-        poly.setRadius(radius);
-
-        BodyDef def = new BodyDef();
-        def.type = type;
-        Body body = world.createBody(def);
-        body.createFixture(poly, density);
-        body.setTransform(x, y, 0);
         poly.dispose();
 
         return body;

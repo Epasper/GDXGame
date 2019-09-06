@@ -12,7 +12,7 @@ public class Controls {
 
     Controls(MyGame game) {
         this.game = game;
-        playerCharacter = new PlayerCharacter(game);
+        playerCharacter = game.playerCharacter;
     }
 
     private final float startingJumpSpeed = 10;
@@ -42,6 +42,10 @@ public class Controls {
         } else if (Gdx.input.isKeyPressed((Input.Keys.E))) {
             game.camera.zoom += Gdx.graphics.getDeltaTime();
         }
+    }
+
+    public void resetTheXVelocities() {
+        game.mainCharacterBody.setLinearVelocity(0, game.mainCharacterBody.getLinearVelocity().y);
     }
 
     void addTheKeyInput() {
