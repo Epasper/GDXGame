@@ -30,14 +30,6 @@ public class ContactSensor implements ContactListener {
     @Override
     public void endContact(Contact contact) {
 
-        if ((contact.getFixtureA().getBody() == groundBody &&
-                contact.getFixtureB().getBody() != playerBody)
-                ||
-                (contact.getFixtureA().getBody() == playerBody &&
-                        contact.getFixtureB().getBody() != groundBody)) {
-            playerOnGround = false;
-        }
-
     }
 
     @Override
