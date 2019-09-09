@@ -19,6 +19,7 @@ public class Controls {
         this.game = game;
         playerCharacter = game.playerCharacter;
         sensor = new ContactSensor(playerCharacter.body, game.groundBody);
+        game.world.setContactListener(sensor);
     }
 
     //todo integrate auto-scrolling of background when character reaches ~20% of the map (both left and right edge)
@@ -39,10 +40,10 @@ public class Controls {
             game.camera.translate(0, -game.levelHeight / 2f * Gdx.graphics.getDeltaTime());
         }
 
-        if (cameraXPos-playerXPos > cameraBorderRight) {
+        if (cameraXPos - playerXPos > cameraBorderRight) {
             game.camera.translate(-cameraSpeedX * Gdx.graphics.getDeltaTime(), 0);
         }
-        if (cameraXPos-playerXPos < cameraBorderLeft) {
+        if (cameraXPos - playerXPos < cameraBorderLeft) {
             game.camera.translate(cameraSpeedX * Gdx.graphics.getDeltaTime(), 0);
         }
         if (Gdx.input.isKeyPressed((Input.Keys.Q))) {
@@ -58,8 +59,7 @@ public class Controls {
 
     public void checkTheJumpingAllowance() {
         if (game.mainCharacterBody.getLinearVelocity().y == 0) {
-            canJump = true;
-            jump = false;
+            //sensor.playerOnGround = true;
         }
     }
 
@@ -77,10 +77,9 @@ public class Controls {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.W) || (Gdx.input.isKeyPressed(Input.Keys.UP))) {
-            if (canJump) {
+            if (sensor.playerOnGround) {
                 game.mainCharacterBody.setLinearVelocity(playerVelocity.x, jumpVelocity);
-                canJump = false;
-                jump = true;
+                sensor.playerOnGround = false;
             }
         }
     }
