@@ -9,6 +9,8 @@ public class PlayerCharacter {
 
     Body body;
 
+    Body feetSensor;
+
     private MyGame game;
 
     ShapeFactory shapeFactory;
@@ -18,10 +20,21 @@ public class PlayerCharacter {
     PlayerCharacter(MyGame game) {
         this.game = game;
         shapeFactory = new ShapeFactory(game);
-        body = shapeFactory.createBox(BodyDef.BodyType.DynamicBody, 0,
+        body = shapeFactory.createBox(BodyDef.BodyType.DynamicBody,
+                0,
                 100 * Configuration.resolutionScaling,
                 2 * Configuration.resolutionScaling,
-                2 * Configuration.resolutionScaling, 5);
+                2 * Configuration.resolutionScaling,
+                5);
+        feetSensor = shapeFactory.createBox(BodyDef.BodyType.DynamicBody,
+                0,
+                0,
+                2 * Configuration.resolutionScaling,
+                0.1f * Configuration.resolutionScaling,
+                5);
+        body.setFixedRotation(true);
+        feetSensor.setFixedRotation(true);
+
     }
 
 

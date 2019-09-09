@@ -10,6 +10,7 @@ public class LevelFactory {
     private MyGame game;
     Level level = new Level();
 
+
     public LevelFactory(MyGame game) {
         this.game = game;
     }

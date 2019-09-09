@@ -13,9 +13,12 @@ public class Controls {
     int maxVelocity = 25;
     int jumpVelocity = 75;
 
+    ContactSensor sensor;
+
     Controls(MyGame game) {
         this.game = game;
         playerCharacter = game.playerCharacter;
+        sensor = new ContactSensor(playerCharacter.body, game.groundBody);
     }
 
     //todo integrate auto-scrolling of background when character reaches ~20% of the map (both left and right edge)

@@ -20,6 +20,7 @@ public class MyGame extends Game {
     ShapeFactory shapeFactory;
 
     Body mainCharacterBody;
+    Body groundBody;
 
     SpriteBatch gameBatch;
     SpriteBatch screensBatch;
@@ -51,7 +52,7 @@ public class MyGame extends Game {
         playerCharacter = new PlayerCharacter(this);
         mainCharacterBody = playerCharacter.body;
         levelFactory = new LevelFactory(this);
-        levelFactory.createFloor(BodyDef.BodyType.StaticBody,
+        groundBody = levelFactory.createFloor(BodyDef.BodyType.StaticBody,
                 -2 * Configuration.resolutionScaling,
                 5f * Configuration.resolutionScaling,
                 300 * Configuration.resolutionScaling,
@@ -65,6 +66,7 @@ public class MyGame extends Game {
         gameBatch.dispose();
         screensBatch.dispose();
         backgroundTexture.dispose();
+        groundTileTexture.dispose();
         world.dispose();
         debugRenderer.dispose();
     }
