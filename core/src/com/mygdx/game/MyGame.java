@@ -26,6 +26,7 @@ public class MyGame extends Game {
     World world;
     Box2DDebugRenderer debugRenderer;
     PlayerCharacter playerCharacter;
+    LevelFactory levelFactory;
 
     int levelHeight = 36;
     int levelWidth = 48;
@@ -44,26 +45,13 @@ public class MyGame extends Game {
         camera.update();
         backgroundTexture = new Texture(Gdx.files.internal("background_image.jpg"));
         groundTileTexture = new Texture(Gdx.files.internal("GroundTile.png"));
-        createEdge(BodyDef.BodyType.StaticBody, -2, 5f, 300, 5f, 0);
         playerCharacter = new PlayerCharacter(this);
         mainCharacterBody = playerCharacter.body;
+        levelFactory = new LevelFactory(this);
+        levelFactory.createFloor(BodyDef.BodyType.StaticBody, -2, 5f, 300, 5f, 0);
     }
 
     //todo refactor this method to the level factory as "createFloor"
-
-    private Body createEdge(BodyDef.BodyType type, float x1, float y1, float x2, float y2, float density) {
-        EdgeShape poly = new EdgeShape();
-        poly.set(new Vector2(0, 0), new Vector2(x2 - x1, y2 - y1));
-
-        BodyDef def = new BodyDef();
-        def.type = type;
-        Body body = world.createBody(def);
-        body.createFixture(poly, density);
-        body.setTransform(x1, y1, 0);
-        poly.dispose();
-
-        return body;
-    }
 
     @Override
     public void dispose() {
