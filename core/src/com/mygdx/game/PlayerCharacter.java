@@ -18,7 +18,10 @@ public class PlayerCharacter {
     PlayerCharacter(MyGame game) {
         this.game = game;
         shapeFactory = new ShapeFactory(game);
-        body = shapeFactory.createBox(BodyDef.BodyType.DynamicBody, 0, 100, 2, 2, 5);
+        body = shapeFactory.createBox(BodyDef.BodyType.DynamicBody, 0,
+                100 * Configuration.resolutionScaling,
+                2 * Configuration.resolutionScaling,
+                2 * Configuration.resolutionScaling, 5);
     }
 
 

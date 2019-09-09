@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 
 public class LevelFactory {
 
-    MyGame game;
+    private MyGame game;
     Level level = new Level();
 
     public LevelFactory(MyGame game) {

@@ -10,18 +10,25 @@ public class Controls {
     PlayerCharacter playerCharacter;
     boolean jump = false;
     boolean canJump = true;
+    int maxVelocity = 25;
+    int jumpVelocity = 75;
 
     Controls(MyGame game) {
         this.game = game;
         playerCharacter = game.playerCharacter;
     }
 
-    //todo jumping should be possible only once, not continuously.
-
     //todo integrate auto-scrolling of background when character reaches ~20% of the map (both left and right edge)
 
     void manageCameraControls() {
-        float cameraSpeedX = game.levelWidth / 2f + 60;
+        float cameraXPos = game.camera.position.x;
+        float cameraYPos = game.camera.position.y;
+        float playerXPos = playerCharacter.playerSprite.getX();
+        float playerYPos = playerCharacter.playerSprite.getY();
+        final float cameraSpeedX = maxVelocity;
+        final float cameraBorderRight = 15f;
+        final float cameraBorderLeft = -15f;
+
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             game.camera.translate(0, game.levelHeight / 2f * Gdx.graphics.getDeltaTime());
         }
@@ -29,10 +36,10 @@ public class Controls {
             game.camera.translate(0, -game.levelHeight / 2f * Gdx.graphics.getDeltaTime());
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (cameraXPos-playerXPos > cameraBorderRight) {
             game.camera.translate(-cameraSpeedX * Gdx.graphics.getDeltaTime(), 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        if (cameraXPos-playerXPos < cameraBorderLeft) {
             game.camera.translate(cameraSpeedX * Gdx.graphics.getDeltaTime(), 0);
         }
         if (Gdx.input.isKeyPressed((Input.Keys.Q))) {
@@ -59,7 +66,6 @@ public class Controls {
         Vector2 playerVelocity = game.mainCharacterBody.getLinearVelocity();
         Vector2 playerPosition = game.mainCharacterBody.getPosition();
 
-        int maxVelocity = 75;
         if (Gdx.input.isKeyPressed(Input.Keys.A) || (Gdx.input.isKeyPressed(Input.Keys.LEFT))) {
             game.mainCharacterBody.setLinearVelocity(-maxVelocity, playerVelocity.y);
         }
@@ -69,7 +75,7 @@ public class Controls {
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.W) || (Gdx.input.isKeyPressed(Input.Keys.UP))) {
             if (canJump) {
-                game.mainCharacterBody.setLinearVelocity(playerVelocity.x, maxVelocity);
+                game.mainCharacterBody.setLinearVelocity(playerVelocity.x, jumpVelocity);
                 canJump = false;
                 jump = true;
             }

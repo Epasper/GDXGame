@@ -61,21 +61,36 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void drawAFrame() {
-        Sprite region = new Sprite(game.backgroundTexture);
-        game.gameBatch.begin();
-        game.gameBatch.draw(region, 0, 0, 356.8f, 106.7f);
+        drawABackground();
 
-        for (int i = 0; i < 10; i++) {
-            game.gameBatch.draw(game.groundTileTexture, -4f + (i * 23f), 0f, 23f, 7.5f);
-        }
+        drawTheFloor();
 
+        final float spriteSize = 4f * Configuration.resolutionScaling;
         game.playerCharacter.playerSprite.setPosition(game.playerCharacter.body.getPosition().x, game.playerCharacter.body.getPosition().y);
         game.gameBatch.draw(game.playerCharacter.playerSprite,
-                game.playerCharacter.playerSprite.getX()-2f,
-                game.playerCharacter.playerSprite.getY()-2f, 4f, 4f);
+                game.playerCharacter.playerSprite.getX() - spriteSize / 2f,
+                game.playerCharacter.playerSprite.getY() - spriteSize / 2f, spriteSize, spriteSize);
 
         game.gameBatch.end();
 
+    }
+
+    private void drawTheFloor() {
+        for (int i = 0; i < 10; i++) {
+            game.gameBatch.draw(game.groundTileTexture, -4f +
+                            (i * 23f * Configuration.resolutionScaling),
+                    0f,
+                    23f * Configuration.resolutionScaling,
+                    7.5f * Configuration.resolutionScaling);
+        }
+    }
+
+    private void drawABackground() {
+        Sprite background = new Sprite(game.backgroundTexture);
+        game.gameBatch.begin();
+        game.gameBatch.draw(background, 0, 0,
+                356.8f * Configuration.resolutionScaling,
+                106.7f * Configuration.resolutionScaling);
     }
 
     private void clearScreen() {

@@ -8,7 +8,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class MyGame extends Game {
 
@@ -48,10 +51,13 @@ public class MyGame extends Game {
         playerCharacter = new PlayerCharacter(this);
         mainCharacterBody = playerCharacter.body;
         levelFactory = new LevelFactory(this);
-        levelFactory.createFloor(BodyDef.BodyType.StaticBody, -2, 5f, 300, 5f, 0);
+        levelFactory.createFloor(BodyDef.BodyType.StaticBody,
+                -2 * Configuration.resolutionScaling,
+                5f * Configuration.resolutionScaling,
+                300 * Configuration.resolutionScaling,
+                5f * Configuration.resolutionScaling,
+                0);
     }
-
-    //todo refactor this method to the level factory as "createFloor"
 
     @Override
     public void dispose() {
