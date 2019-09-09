@@ -8,12 +8,17 @@ public class Controls {
 
     private MyGame game;
     PlayerCharacter playerCharacter;
-
+    boolean jump = false;
+    boolean canJump = true;
 
     Controls(MyGame game) {
         this.game = game;
         playerCharacter = game.playerCharacter;
     }
+
+    //todo jumping should be possible only once, not continuously.
+
+    //todo integrate auto-scrolling of background when character reaches ~20% of the map (both left and right edge)
 
     void manageCameraControls() {
         float cameraSpeedX = game.levelWidth / 2f + 60;
@@ -41,6 +46,13 @@ public class Controls {
         game.mainCharacterBody.setLinearVelocity(0, game.mainCharacterBody.getLinearVelocity().y);
     }
 
+    public void checkTheJumpingAllowance() {
+        if (game.mainCharacterBody.getLinearVelocity().y == 0) {
+            canJump = true;
+            jump = false;
+        }
+    }
+
     void addTheKeyInput() {
 
 
@@ -56,8 +68,11 @@ public class Controls {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.W) || (Gdx.input.isKeyPressed(Input.Keys.UP))) {
-
-            game.mainCharacterBody.setLinearVelocity(playerVelocity.x, maxVelocity);
+            if (canJump) {
+                game.mainCharacterBody.setLinearVelocity(playerVelocity.x, maxVelocity);
+                canJump = false;
+                jump = true;
+            }
         }
     }
 }

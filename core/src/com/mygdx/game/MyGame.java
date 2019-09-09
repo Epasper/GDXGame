@@ -49,6 +49,8 @@ public class MyGame extends Game {
         mainCharacterBody = playerCharacter.body;
     }
 
+    //todo refactor this method to the level factory as "createFloor"
+
     private Body createEdge(BodyDef.BodyType type, float x1, float y1, float x2, float y2, float density) {
         EdgeShape poly = new EdgeShape();
         poly.set(new Vector2(0, 0), new Vector2(x2 - x1, y2 - y1));

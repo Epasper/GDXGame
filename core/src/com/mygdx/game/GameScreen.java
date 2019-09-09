@@ -23,6 +23,8 @@ public class GameScreen extends ScreenAdapter {
         controls = new Controls(game);
     }
 
+    //todo support for different screen resolutions
+
     @Override
     public void show() {
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -54,6 +56,7 @@ public class GameScreen extends ScreenAdapter {
         game.world.step(1 / 60f, 6, 2);
 
         controls.resetTheXVelocities();
+        controls.checkTheJumpingAllowance();
 
     }
 
