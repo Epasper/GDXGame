@@ -22,9 +22,9 @@ public class PlayerCharacter {
         shapeFactory = new ShapeFactory(game);
         body = shapeFactory.createBox(BodyDef.BodyType.DynamicBody,
                 0,
-                20 * Configuration.resolutionScalingX,
-                2 * Configuration.resolutionScalingX,
-                2 * Configuration.resolutionScalingX,
+                20 ,
+                2,
+                2,
                 5);
         /*feetSensor = shapeFactory.createBox(BodyDef.BodyType.DynamicBody,
                 0,

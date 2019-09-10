@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
@@ -38,8 +38,8 @@ public class MyGame extends Game {
 
     Viewport viewport;
 
-    int levelHeight = 36;
-    int levelWidth = 48;
+    int levelHeight = 50;
+    int levelWidth = 50;
 
     @Override
     public void resize(int width, int height) {
@@ -58,7 +58,7 @@ public class MyGame extends Game {
         font = new BitmapFont();
         setScreen(new MenuScreen(this));
         camera = new OrthographicCamera(levelWidth, levelHeight);
-        viewport = new FitViewport(100, 100, camera);
+        viewport = new FillViewport(levelWidth, levelHeight, camera);
         viewport.apply();
         playerCharacter = new PlayerCharacter(this);
         mainCharacterBody = playerCharacter.body;

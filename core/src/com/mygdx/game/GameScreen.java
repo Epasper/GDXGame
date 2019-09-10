@@ -65,7 +65,7 @@ public class GameScreen extends ScreenAdapter {
 
         drawTheFloor();
 
-        final float spriteSize = 4f * Configuration.resolutionScalingX;
+        final float spriteSize = 4f;
         game.playerCharacter.playerSprite.setPosition(game.playerCharacter.body.getPosition().x, game.playerCharacter.body.getPosition().y);
         game.gameBatch.draw(game.playerCharacter.playerSprite,
                 game.playerCharacter.playerSprite.getX() - spriteSize / 2f,
@@ -78,10 +78,10 @@ public class GameScreen extends ScreenAdapter {
     private void drawTheFloor() {
         for (int i = 0; i < 10; i++) {
             game.gameBatch.draw(game.groundTileTexture, -4f +
-                            (i * 23f * Configuration.resolutionScalingX),
+                            (i * 23f),
                     0f,
-                    23f * Configuration.resolutionScalingX,
-                    7.5f * Configuration.resolutionScalingX);
+                    23f,
+                    7.5f);
         }
     }
 
@@ -89,8 +89,8 @@ public class GameScreen extends ScreenAdapter {
         Sprite background = new Sprite(game.backgroundTexture);
         game.gameBatch.begin();
         game.gameBatch.draw(background, 0, 0,
-                356.8f * Configuration.resolutionScalingX,
-                106.7f * Configuration.resolutionScalingX);
+                356.8f,
+                106.7f);
     }
 
     private void clearScreen() {

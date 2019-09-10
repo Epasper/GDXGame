@@ -31,8 +31,8 @@ public class MenuScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, .25f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.screensBatch.begin();
-        game.font.draw(game.screensBatch, "Welcome to the Game!", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .75f);
-        game.font.draw(game.screensBatch, "Press space to play.", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .25f);
+        game.font.draw(game.screensBatch, "Welcome to the Game!", 150, 250);
+        game.font.draw(game.screensBatch, "Press space to play.", 150, 200);
         game.screensBatch.end();
     }
 

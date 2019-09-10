@@ -10,7 +10,7 @@ public class Controls {
     PlayerCharacter playerCharacter;
     boolean jump = false;
     boolean canJump = true;
-    int maxVelocity = 25;
+    int maxVelocity = 50;
     int jumpVelocity = 75;
 
     ContactSensor sensor;
