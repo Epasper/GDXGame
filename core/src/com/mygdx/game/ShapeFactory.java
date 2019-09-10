@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 public class ShapeFactory {
 
     private MyGame game;
+    CircleShape circle = new CircleShape();
 
     public ShapeFactory(MyGame game) {
         this.game = game;
@@ -28,7 +29,6 @@ public class ShapeFactory {
     }
 
     public Body createCircle(BodyDef.BodyType type, float x, float y, float radius, float density) {
-        CircleShape circle = new CircleShape();
         circle.setRadius(radius);
 
         BodyDef def = new BodyDef();
@@ -36,7 +36,7 @@ public class ShapeFactory {
         Body body = game.world.createBody(def);
         body.createFixture(circle, density);
         body.setTransform(x, y, 0);
-        circle.dispose();
+        //circle.dispose();
 
         return body;
     }

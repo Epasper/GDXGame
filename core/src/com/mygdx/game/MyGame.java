@@ -75,6 +75,7 @@ public class MyGame extends Game {
                 300,
                 5f,
                 0);
+        groundBody.setUserData("ground");
         /*for (int i = 0; i < 8; i++) {
             Random random = new Random();
             int randomLevel = random.nextInt(10);

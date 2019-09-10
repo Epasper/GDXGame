@@ -18,7 +18,7 @@ public class Controls {
     Controls(MyGame game) {
         this.game = game;
         playerCharacter = game.playerCharacter;
-        sensor = new ContactSensor(playerCharacter.body, game.groundBody);
+        sensor = new ContactSensor(game, playerCharacter.body, game.groundBody);
         game.world.setContactListener(sensor);
     }
 

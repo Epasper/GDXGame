@@ -6,6 +6,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -50,12 +51,31 @@ public class GameScreen extends ScreenAdapter {
 
         drawAFrame();
 
+
         game.debugRenderer.render(game.world, game.camera.combined);
         game.world.step(1 / 60f, 6, 2);
+
+        checkForCoinsToDestroy();
 
         controls.resetTheXVelocities();
         controls.checkTheJumpingAllowance();
 
+    }
+
+    private void checkForCoinsToDestroy() {
+        int numberOfListElementToRemove = -1;
+        for (int i = 0; i < game.levelFactory.coinsList.size(); i++) {
+            Body currentBody = game.levelFactory.coinsList.get(i).collectibleBody;
+            //System.out.println(currentBody.getUserData());
+            if (currentBody.getUserData().equals("delete")) {
+                game.world.destroyBody(currentBody);
+                numberOfListElementToRemove = i;
+            }
+        }
+        if (numberOfListElementToRemove > -1) {
+            game.levelFactory.coinsList.remove(numberOfListElementToRemove);
+            numberOfListElementToRemove = -1;
+        }
     }
 
     private void drawAFrame() {
@@ -83,11 +103,12 @@ public class GameScreen extends ScreenAdapter {
     private void drawTheCoins() {
         for (Collectible currentCoin : game.levelFactory.coinsList) {
             final float spriteSize = 4f;
-            game.gameBatch.draw(currentCoin.collectibleSprite,
-                    currentCoin.collectibleSprite.getX() - spriteSize / 2f,
-                    currentCoin.collectibleSprite.getY() - spriteSize / 2f,
+            game.gameBatch.draw(currentCoin,
+                    currentCoin.getX() - spriteSize / 2f,
+                    currentCoin.getY() - spriteSize / 2f,
                     spriteSize,
                     spriteSize);
+
         }
     }
 

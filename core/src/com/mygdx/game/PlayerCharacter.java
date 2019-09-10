@@ -26,6 +26,7 @@ public class PlayerCharacter {
                 2,
                 2,
                 5);
+        body.setUserData("player");
         /*feetSensor = shapeFactory.createBox(BodyDef.BodyType.DynamicBody,
                 0,
                 20 * Configuration.resolutionScalingX,
