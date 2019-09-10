@@ -16,8 +16,6 @@ public class GameScreen extends ScreenAdapter {
     private float circleY = 150;
     private float circleRadius = 50;
 
-    private float accumulator = 0;
-
     public GameScreen(MyGame game) {
         this.game = game;
         controls = new Controls(game);
@@ -61,18 +59,36 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void drawAFrame() {
+        game.gameBatch.begin();
+
         drawABackground();
 
         drawTheFloor();
+
+        drawTheCoins();
 
         final float spriteSize = 4f;
         game.playerCharacter.playerSprite.setPosition(game.playerCharacter.body.getPosition().x, game.playerCharacter.body.getPosition().y);
         game.gameBatch.draw(game.playerCharacter.playerSprite,
                 game.playerCharacter.playerSprite.getX() - spriteSize / 2f,
-                game.playerCharacter.playerSprite.getY() - spriteSize / 2f, spriteSize, spriteSize);
+                game.playerCharacter.playerSprite.getY() - spriteSize / 2f,
+                spriteSize,
+                spriteSize);
+
 
         game.gameBatch.end();
 
+    }
+
+    private void drawTheCoins() {
+        for (Collectible currentCoin : game.levelFactory.coinsList) {
+            final float spriteSize = 4f;
+            game.gameBatch.draw(currentCoin.collectibleSprite,
+                    currentCoin.collectibleSprite.getX() - spriteSize / 2f,
+                    currentCoin.collectibleSprite.getY() - spriteSize / 2f,
+                    spriteSize,
+                    spriteSize);
+        }
     }
 
     private void drawTheFloor() {
@@ -87,7 +103,6 @@ public class GameScreen extends ScreenAdapter {
 
     private void drawABackground() {
         Sprite background = new Sprite(game.backgroundTexture);
-        game.gameBatch.begin();
         game.gameBatch.draw(background, 0, 0,
                 356.8f,
                 106.7f);
