@@ -11,8 +11,8 @@ public class DesktopLauncher {
         //new LwjglApplication(new test(), config);
         System.out.println(config.width);
         System.out.println(config.height);
-        config.width = Math.round(config.width * Configuration.resolutionScalingMultiplier);
-        config.height = Math.round(config.height * Configuration.resolutionScalingMultiplier);
+        config.width = Math.round(config.width * Configuration.resolutionScalingMultiplierX);
+        config.height = Math.round(config.height * Configuration.resolutionScalingMultiplierX);
         new LwjglApplication(new MyGame(), config);
     }
 }

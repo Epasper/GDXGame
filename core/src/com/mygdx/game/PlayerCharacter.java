@@ -22,18 +22,20 @@ public class PlayerCharacter {
         shapeFactory = new ShapeFactory(game);
         body = shapeFactory.createBox(BodyDef.BodyType.DynamicBody,
                 0,
-                100 * Configuration.resolutionScaling,
-                2 * Configuration.resolutionScaling,
-                2 * Configuration.resolutionScaling,
+                20 * Configuration.resolutionScalingX,
+                2 * Configuration.resolutionScalingX,
+                2 * Configuration.resolutionScalingX,
                 5);
-        feetSensor = shapeFactory.createBox(BodyDef.BodyType.DynamicBody,
+        /*feetSensor = shapeFactory.createBox(BodyDef.BodyType.DynamicBody,
                 0,
-                0,
-                2 * Configuration.resolutionScaling,
-                0.1f * Configuration.resolutionScaling,
-                5);
+                20 * Configuration.resolutionScalingX,
+                2 * Configuration.resolutionScalingX,
+                0.1f * Configuration.resolutionScalingX,
+                5);*/
         body.setFixedRotation(true);
+/*
         feetSensor.setFixedRotation(true);
+*/
 
     }
 

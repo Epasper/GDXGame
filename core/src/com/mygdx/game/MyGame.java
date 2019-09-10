@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +36,17 @@ public class MyGame extends Game {
     PlayerCharacter playerCharacter;
     LevelFactory levelFactory;
 
+    Viewport viewport;
+
     int levelHeight = 36;
     int levelWidth = 48;
+
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height);
+        camera.position.set(mainCharacterBody.getPosition().x,
+                mainCharacterBody.getPosition().y, 0);
+    }
 
     @Override
     public void create() {
@@ -47,19 +58,22 @@ public class MyGame extends Game {
         font = new BitmapFont();
         setScreen(new MenuScreen(this));
         camera = new OrthographicCamera(levelWidth, levelHeight);
-        camera.position.set(levelWidth / 2f, levelHeight / 2f, 0);
+        viewport = new FitViewport(100, 100, camera);
+        viewport.apply();
+        playerCharacter = new PlayerCharacter(this);
+        mainCharacterBody = playerCharacter.body;
+        camera.position.set(mainCharacterBody.getPosition().x,
+                mainCharacterBody.getPosition().y, 0);
         camera.update();
         backgroundTexture = new Texture(Gdx.files.internal("background_image.jpg"));
         groundTileTexture = new Texture(Gdx.files.internal("GroundTile.png"));
-        playerCharacter = new PlayerCharacter(this);
-        mainCharacterBody = playerCharacter.body;
         levelFactory = new LevelFactory(this);
         //todo refactor this into the LevelFactory
         groundBody = levelFactory.createFloor(BodyDef.BodyType.StaticBody,
-                -2 * Configuration.resolutionScaling,
-                5f * Configuration.resolutionScaling,
-                300 * Configuration.resolutionScaling,
-                5f * Configuration.resolutionScaling,
+                -2,
+                5f,
+                300,
+                5f,
                 0);
         /*for (int i = 0; i < 8; i++) {
             Random random = new Random();
