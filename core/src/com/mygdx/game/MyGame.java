@@ -50,6 +50,8 @@ public class MyGame extends Game {
 
     @Override
     public void create() {
+        System.out.println("GDX Version: " + Gdx.app.getGraphics().getGLVersion().getMajorVersion() + "." + Gdx.app.getGraphics().getGLVersion().getMinorVersion());
+
         debugRenderer = new Box2DDebugRenderer();
         world = new World(new Vector2(0, -200), true);
         gameBatch = new SpriteBatch();
@@ -68,7 +70,6 @@ public class MyGame extends Game {
         backgroundTexture = new Texture(Gdx.files.internal("background_image.jpg"));
         groundTileTexture = new Texture(Gdx.files.internal("GroundTile.png"));
         levelFactory = new LevelFactory(this);
-        //todo refactor this into the LevelFactory
         groundBody = levelFactory.createFloor(BodyDef.BodyType.StaticBody,
                 -2,
                 5f,
@@ -76,6 +77,7 @@ public class MyGame extends Game {
                 5f,
                 0);
         groundBody.setUserData("ground");
+
         /*for (int i = 0; i < 8; i++) {
             Random random = new Random();
             int randomLevel = random.nextInt(10);

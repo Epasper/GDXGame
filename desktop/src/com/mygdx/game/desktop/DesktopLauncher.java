@@ -7,6 +7,7 @@ import com.mygdx.game.MyGame;
 public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        System.out.println("GDX Version: " + com.badlogic.gdx.Version.VERSION);
         //new LwjglApplication(new test(), config);
 /*        System.out.println(config.width);
         System.out.println(config.height);

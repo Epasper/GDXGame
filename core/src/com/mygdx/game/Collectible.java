@@ -39,4 +39,8 @@ public class Collectible extends Sprite {
         collectibleBody.createFixture(fixtureDef).setUserData("coin");
     }
 
+    public void destroyBody () {
+        game.world.destroyBody(this.collectibleBody);
+    }
+
 }

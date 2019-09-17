@@ -7,8 +7,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Array;
 
-public class GameScreen extends ScreenAdapter {
+import java.util.Random;
+
+//https://www.gamefromscratch.com/post/2013/11/27/LibGDX-Tutorial-9-Scene2D-Part-1.aspx <-- this class should probably extend an Application Listener and be a Scene instead of Screen
+
+public class GameScreen extends ScreenAdapter  {
 
     private MyGame game;
     private Controls controls;
@@ -17,9 +22,19 @@ public class GameScreen extends ScreenAdapter {
     private float circleY = 150;
     private float circleRadius = 50;
 
+    Array<Collectible> coinsList = new Array<>();
+
+
     public GameScreen(MyGame game) {
         this.game = game;
         controls = new Controls(game);
+        Random random = new Random();
+        for (int i = 0; i < 15; i++) {
+            float xPos = random.nextInt(150);
+            float yPos = random.nextInt(10);
+            Collectible coin = new Collectible(game, xPos, yPos, "Coin.png");
+            coinsList.add(coin);
+        }
     }
 
     //todo support for different screen resolutions
@@ -36,10 +51,13 @@ public class GameScreen extends ScreenAdapter {
                 return true;
             }
         });
+        System.out.println("End of Show");
     }
 
     @Override
     public void render(float delta) {
+
+        //todo bodies should not be created in the render method.
 
         controls.addTheKeyInput();
 
@@ -51,31 +69,49 @@ public class GameScreen extends ScreenAdapter {
 
         drawAFrame();
 
+        checkForCoinsToDestroy();
 
         game.debugRenderer.render(game.world, game.camera.combined);
         game.world.step(1 / 60f, 6, 2);
 
-        checkForCoinsToDestroy();
+        for (Body currentBody : controls.sensor.bodiesToBeRemoved) {
+            for (int i = 0; i < coinsList.size; i++) {
+                if (coinsList.get(i).collectibleBody == currentBody) {
+                    coinsList.get(i).collectibleBody = null;
+                    coinsList.removeIndex(i);
+                }
+            }
+            game.world.destroyBody(currentBody);
+            System.out.println("Body Destroyed: " + currentBody.toString());
+        }
+        controls.sensor.bodiesToBeRemoved.clear();
 
         controls.resetTheXVelocities();
         controls.checkTheJumpingAllowance();
 
     }
 
-    private void checkForCoinsToDestroy() {
+    public void checkForCoinsToDestroy() {
         int numberOfListElementToRemove = -1;
-        for (int i = 0; i < game.levelFactory.coinsList.size(); i++) {
-            Body currentBody = game.levelFactory.coinsList.get(i).collectibleBody;
+        for (int i = 0; i < coinsList.size; i++) {
+            Body currentBody = coinsList.get(i).collectibleBody;
             //System.out.println(currentBody.getUserData());
-            if (currentBody.getUserData().equals("delete")) {
+            /*if (currentBody.getUserData().equals("delete")) {
                 game.world.destroyBody(currentBody);
+                currentBody = null;
                 numberOfListElementToRemove = i;
+            }*/
+        }
+        /*Array<Body> bodies = new Array<>(game.world.getBodyCount());
+        game.world.getBodies(bodies);
+        for (Body body : bodies) {
+            if (body.getUserData() != null && body.getUserData().equals("delete")) {
+                game.world.destroyBody (body);
             }
-        }
-        if (numberOfListElementToRemove > -1) {
-            game.levelFactory.coinsList.remove(numberOfListElementToRemove);
-            numberOfListElementToRemove = -1;
-        }
+        }*/
+        /*if (numberOfListElementToRemove > -1) {
+            coinsList.removeIndex(numberOfListElementToRemove);
+        }*/
     }
 
     private void drawAFrame() {
@@ -101,7 +137,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void drawTheCoins() {
-        for (Collectible currentCoin : game.levelFactory.coinsList) {
+        for (Collectible currentCoin : coinsList) {
             final float spriteSize = 4f;
             game.gameBatch.draw(currentCoin,
                     currentCoin.getX() - spriteSize / 2f,
