@@ -75,12 +75,10 @@ public class GameScreen extends ScreenAdapter {
 
         drawAFrame();
 
-        //checkForCoinsToDestroy();
-
         game.debugRenderer.render(game.world, game.camera.combined);
         game.world.step(1 / 60f, 6, 2);
 
-        for (Body currentBody : controls.sensor.bodiesToBeRemoved) {
+        for (Body currentBody : controls.groundSensor.bodiesToBeRemoved) {
             for (int i = 0; i < coinsList.size; i++) {
                 if (coinsList.get(i).collectibleBody == currentBody) {
                     coinsList.get(i).collectibleBody = null;
@@ -89,36 +87,12 @@ public class GameScreen extends ScreenAdapter {
             }
             game.world.destroyBody(currentBody);
             System.out.println("Body Destroyed: " + currentBody.toString());
-            currentBody = null;
         }
-        controls.sensor.bodiesToBeRemoved.clear();
+        controls.groundSensor.bodiesToBeRemoved.clear();
 
         controls.resetTheXVelocities();
         controls.checkTheJumpingAllowance();
 
-    }
-
-    public void checkForCoinsToDestroy() {
-        int numberOfListElementToRemove = -1;
-        for (int i = 0; i < coinsList.size; i++) {
-            Body currentBody = coinsList.get(i).collectibleBody;
-            //System.out.println(currentBody.getUserData());
-            /*if (currentBody.getUserData().equals("delete")) {
-                game.world.destroyBody(currentBody);
-                currentBody = null;
-                numberOfListElementToRemove = i;
-            }*/
-        }
-        /*Array<Body> bodies = new Array<>(game.world.getBodyCount());
-        game.world.getBodies(bodies);
-        for (Body body : bodies) {
-            if (body.getUserData() != null && body.getUserData().equals("delete")) {
-                game.world.destroyBody (body);
-            }
-        }*/
-        /*if (numberOfListElementToRemove > -1) {
-            coinsList.removeIndex(numberOfListElementToRemove);
-        }*/
     }
 
     private void drawAFrame() {
@@ -126,7 +100,7 @@ public class GameScreen extends ScreenAdapter {
 
         drawABackground();
 
-        drawTheFloor();
+        paintTheFloorImages();
 
         drawTheCoins();
 
@@ -156,7 +130,7 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-    private void drawTheFloor() {
+    private void paintTheFloorImages() {
         for (int i = 0; i < 10; i++) {
             game.gameBatch.draw(game.groundTileTexture, -4f +
                             (i * 23f),

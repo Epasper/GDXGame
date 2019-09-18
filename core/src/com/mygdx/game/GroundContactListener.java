@@ -35,11 +35,15 @@ public class GroundContactListener implements ContactListener {
         System.out.println(contact.getFixtureA().getUserData()
                 + " --- " + contact.getFixtureA().getBody().toString()
                 + " --- " + contact.getFixtureB().getUserData()
+                + " --- " + contact.getFixtureA().getFilterData().maskBits
+                + " --- " + contact.getFixtureB().getFilterData().maskBits
                 + " --- " + contact.getFixtureB().getBody().toString());
 
         if (fixtureA.getUserData() != null) {
             if (fixtureB.getBody() == playerBody && fixtureA.getUserData().equals("coin")) {
                 System.out.println("COLLISION DETECTED!!");
+                System.out.println(fixtureA.isSensor());
+                System.out.println(fixtureB.isSensor());
                 bodiesToBeRemoved.add(fixtureA.getBody());
             }
 
@@ -47,6 +51,8 @@ public class GroundContactListener implements ContactListener {
         if (fixtureB.getUserData() != null) {
             if (fixtureA.getBody() == playerBody && fixtureB.getUserData().equals("coin")) {
                 System.out.println("COLLISION DETECTED!!");
+                System.out.println(fixtureA.isSensor());
+                System.out.println(fixtureB.isSensor());
                 bodiesToBeRemoved.add(fixtureB.getBody());
             }
         }

@@ -30,11 +30,15 @@ public class Collectible extends Sprite {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shapeFactory.circle;
-        fixtureDef.density = 3f;
-        fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 0.5f;
+        fixtureDef.density = 0f;
+        fixtureDef.friction = 0f;
+        fixtureDef.restitution = 0f;
+        fixtureDef.isSensor = true;
+        fixtureDef.filter.categoryBits = CollisionCategories.CATEGORY_COLLECTIBLES;
+        fixtureDef.filter.maskBits = CollisionCategories.MASK_COLLECTIBLE;
 
         collectibleBody.setUserData("coin");
+        collectibleBody.createFixture(fixtureDef);
         collectibleBody.createFixture(fixtureDef).setUserData("coin");
     }
 

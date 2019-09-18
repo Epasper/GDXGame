@@ -77,6 +77,10 @@ public class MyGame extends Game {
                 5f,
                 0);
         groundBody.setUserData("ground");
+        Filter filter = new Filter();
+        filter.categoryBits = CollisionCategories.CATEGORY_SCENERY;
+        filter.maskBits = CollisionCategories.MASK_SCENERY;
+        groundBody.getFixtureList().get(0).setFilterData(filter);
 
         /*for (int i = 0; i < 8; i++) {
             Random random = new Random();
