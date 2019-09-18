@@ -15,6 +15,7 @@ public class MenuScreen extends ScreenAdapter {
 
     @Override
     public void show(){
+
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean keyDown(int keyCode) {

@@ -26,7 +26,6 @@ public class Collectible extends Sprite {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
         bodyDef.position.set(positionX, positionY);
-        collectibleBody = game.world.createBody(bodyDef);
         //collectibleTexture.dispose();
 
         FixtureDef fixtureDef = new FixtureDef();

@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 
-public class ContactSensor implements ContactListener {
+public class GroundContactListener implements ContactListener {
 
     Body playerBody;
     Body groundBody;
@@ -12,7 +12,7 @@ public class ContactSensor implements ContactListener {
 
     public boolean playerOnGround = false;
 
-    public ContactSensor(MyGame game, Body playerBody, Body groundBody) {
+    public GroundContactListener(MyGame game, Body playerBody, Body groundBody) {
         this.playerBody = playerBody;
         this.groundBody = groundBody;
         this.game = game;
@@ -20,6 +20,7 @@ public class ContactSensor implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+
 
         final Fixture fixtureA = contact.getFixtureA();
         final Fixture fixtureB = contact.getFixtureB();
@@ -35,19 +36,10 @@ public class ContactSensor implements ContactListener {
                 + " --- " + contact.getFixtureA().getBody().toString()
                 + " --- " + contact.getFixtureB().getUserData()
                 + " --- " + contact.getFixtureB().getBody().toString());
-/*        if (contact.getFixtureA().getUserData() != null && contact.getFixtureB().getUserData() != null) {
-            if ((contact.getFixtureB().getBody() == playerBody &&
-                    contact.getFixtureB().getUserData().equals("coin"))
-                    ||
-                    (contact.getFixtureA().getUserData().equals("coin") &&
-                            contact.getFixtureB().getBody() == playerBody)) {
-                System.out.println("COLLISION DETECTED!!");
-            }
-        }*/
+
         if (fixtureA.getUserData() != null) {
             if (fixtureB.getBody() == playerBody && fixtureA.getUserData().equals("coin")) {
                 System.out.println("COLLISION DETECTED!!");
-                //fixtureA.getBody().setUserData("delete");
                 bodiesToBeRemoved.add(fixtureA.getBody());
             }
 
@@ -55,15 +47,7 @@ public class ContactSensor implements ContactListener {
         if (fixtureB.getUserData() != null) {
             if (fixtureA.getBody() == playerBody && fixtureB.getUserData().equals("coin")) {
                 System.out.println("COLLISION DETECTED!!");
-                //fixtureB.getBody().setUserData("delete");
                 bodiesToBeRemoved.add(fixtureB.getBody());
-                /*Array<Body> bodies = new Array<>(game.world.getBodyCount());
-                game.world.getBodies(bodies);
-                for (Body body : bodies) {
-                    if (body.getUserData() != null && body.getUserData().equals("destroy")) {
-                        game.world.destroyBody (body);
-                    }
-                }*/
             }
         }
     }

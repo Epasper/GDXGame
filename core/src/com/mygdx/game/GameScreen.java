@@ -1,22 +1,26 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.Random;
 
-//https://www.gamefromscratch.com/post/2013/11/27/LibGDX-Tutorial-9-Scene2D-Part-1.aspx <-- this class should probably extend an Application Listener and be a Scene instead of Screen
+// todo https://www.gamefromscratch.com/post/2013/11/27/LibGDX-Tutorial-9-Scene2D-Part-1.aspx <-- this class should probably extend an Application Listener and be a Scene instead of Screen
 
-public class GameScreen extends ScreenAdapter  {
+public class GameScreen extends ScreenAdapter {
 
     private MyGame game;
     private Controls controls;
+
+    boolean spawnIsDone = false;
+
+    Stage gameStage;
 
     private float circleX = 300;
     private float circleY = 150;
@@ -30,9 +34,9 @@ public class GameScreen extends ScreenAdapter  {
         controls = new Controls(game);
         Random random = new Random();
         for (int i = 0; i < 15; i++) {
-            float xPos = random.nextInt(150);
+            float xPos = random.nextInt(200);
             float yPos = random.nextInt(10);
-            Collectible coin = new Collectible(game, xPos, yPos, "Coin.png");
+            Collectible coin = new Collectible(game, xPos, yPos + 5, "Coin.png");
             coinsList.add(coin);
         }
     }
@@ -41,7 +45,9 @@ public class GameScreen extends ScreenAdapter  {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(new InputAdapter() {
+        gameStage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(gameStage);
+        /*Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean touchDown(int x, int y, int pointer, int button) {
                 int renderY = game.levelHeight - y;
@@ -50,7 +56,7 @@ public class GameScreen extends ScreenAdapter  {
                 }
                 return true;
             }
-        });
+        });*/
         System.out.println("End of Show");
     }
 
@@ -69,7 +75,7 @@ public class GameScreen extends ScreenAdapter  {
 
         drawAFrame();
 
-        checkForCoinsToDestroy();
+        //checkForCoinsToDestroy();
 
         game.debugRenderer.render(game.world, game.camera.combined);
         game.world.step(1 / 60f, 6, 2);
@@ -83,6 +89,7 @@ public class GameScreen extends ScreenAdapter  {
             }
             game.world.destroyBody(currentBody);
             System.out.println("Body Destroyed: " + currentBody.toString());
+            currentBody = null;
         }
         controls.sensor.bodiesToBeRemoved.clear();
 
@@ -122,6 +129,7 @@ public class GameScreen extends ScreenAdapter  {
         drawTheFloor();
 
         drawTheCoins();
+
 
         final float spriteSize = 4f;
         game.playerCharacter.playerSprite.setPosition(game.playerCharacter.body.getPosition().x, game.playerCharacter.body.getPosition().y);

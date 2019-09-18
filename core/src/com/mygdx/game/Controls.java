@@ -13,12 +13,12 @@ public class Controls {
     int maxVelocity = 50;
     int jumpVelocity = 75;
 
-    ContactSensor sensor;
+    GroundContactListener sensor;
 
     Controls(MyGame game) {
         this.game = game;
         playerCharacter = game.playerCharacter;
-        sensor = new ContactSensor(game, playerCharacter.body, game.groundBody);
+        sensor = new GroundContactListener(game, playerCharacter.body, game.groundBody);
         game.world.setContactListener(sensor);
     }
 
