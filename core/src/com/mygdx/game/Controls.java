@@ -28,16 +28,21 @@ public class Controls {
         float playerXPos = playerCharacter.playerSprite.getX();
         float playerYPos = playerCharacter.playerSprite.getY();
         final float cameraSpeedX = maxVelocity;
-        final float cameraBorderRight = 10f;
-        final float cameraBorderLeft = -10f;
-        final float cameraBorderUp = 10f;
-        final float cameraBorderDown = -10f;
+        final float cameraBorderRight = 2f;
+        final float cameraBorderLeft = -2f;
+        final float cameraBorderUp = 5f;
+        final float cameraBorderDown = -15f;
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             game.camera.translate(0, game.levelHeight / 2f * Gdx.graphics.getDeltaTime());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             game.camera.translate(0, -game.levelHeight / 2f * Gdx.graphics.getDeltaTime());
+        }
+
+        //todo debugging line for dealing damage to player
+        if (Gdx.input.isKeyJustPressed(Input.Keys.X)) {
+            game.playerCharacter.hitPoints--;
         }
 
         //camera translation upon getting closer to top/bottom edge

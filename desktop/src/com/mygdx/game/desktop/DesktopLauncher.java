@@ -13,6 +13,9 @@ public class DesktopLauncher {
         System.out.println(config.height);
         config.width = Math.round(config.width);
         config.height = Math.round(config.height);*/
+        config.width = 768;
+        config.height = 1366;
+        config.fullscreen = true;
         new LwjglApplication(new MyGame(), config);
     }
 }

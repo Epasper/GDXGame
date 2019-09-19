@@ -14,11 +14,14 @@ public class PlayerCharacter {
 
     private MyGame game;
 
+    int hitPoints;
+
     ShapeFactory shapeFactory;
 
     Sprite playerSprite = new Sprite(new Texture("Mario.png"));
 
     PlayerCharacter(MyGame game) {
+        hitPoints = 50;
         this.game = game;
         shapeFactory = new ShapeFactory(game);
         body = shapeFactory.createBox(BodyDef.BodyType.DynamicBody,

@@ -6,25 +6,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MyGame extends Game {
 
-    ShapeRenderer shapeRenderer;
     OrthographicCamera camera;
-    ShapeFactory shapeFactory;
 
     Body mainCharacterBody;
     Body groundBody;
-    FixtureDef groundFixture = new FixtureDef();
-    List<Body> floatingIslesList = new ArrayList<>();
 
     SpriteBatch gameBatch;
     SpriteBatch screensBatch;
@@ -38,6 +30,7 @@ public class MyGame extends Game {
     Box2DDebugRenderer debugRenderer;
     PlayerCharacter playerCharacter;
     LevelFactory levelFactory;
+    HUDElements hud;
 
     Viewport viewport;
 
@@ -59,7 +52,6 @@ public class MyGame extends Game {
         world = new World(new Vector2(0, -200), true);
         gameBatch = new SpriteBatch();
         screensBatch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();
         setScreen(new MenuScreen(this));
         camera = new OrthographicCamera(levelWidth, levelHeight);
@@ -87,25 +79,12 @@ public class MyGame extends Game {
         filter.categoryBits = CollisionCategories.CATEGORY_SCENERY;
         filter.maskBits = CollisionCategories.MASK_SCENERY;
         groundBody.getFixtureList().get(0).setFilterData(filter);
-
-        /*for (int i = 0; i < 8; i++) {
-            Random random = new Random();
-            int randomLevel = random.nextInt(10);
-            int randomWidth = random.nextInt(10);
-            Body floatingIsletBody = levelFactory.createFloatingIsland(BodyDef.BodyType.StaticBody,
-                    ((-2 + randomWidth) * 5 * i) * Configuration.resolutionScaling,
-                    ((5 + randomLevel * i)) * Configuration.resolutionScaling,
-                    ((10 + randomWidth) * 5 * i) * Configuration.resolutionScaling,
-                    ((5 + randomLevel * i)) * Configuration.resolutionScaling,
-                    0);
-            floatingIslesList.add(floatingIsletBody);
-        }*/
-
+        hud = new HUDElements();
+        hud.player = playerCharacter;
     }
 
     @Override
     public void dispose() {
-        shapeRenderer.dispose();
         gameBatch.dispose();
         screensBatch.dispose();
         backgroundTexture.dispose();

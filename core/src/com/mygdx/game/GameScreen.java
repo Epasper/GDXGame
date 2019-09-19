@@ -18,6 +18,7 @@ public class GameScreen extends ScreenAdapter {
     private MyGame game;
     private Controls controls;
 
+
     boolean spawnIsDone = false;
 
     Stage gameStage;
@@ -115,6 +116,8 @@ public class GameScreen extends ScreenAdapter {
 
 
         game.gameBatch.end();
+
+        game.hud.addHudElements();
 
     }
 
@@ -224,7 +227,6 @@ public class GameScreen extends ScreenAdapter {
 
     private void setCamera() {
         game.camera.update();
-        game.shapeRenderer.setProjectionMatrix(game.camera.combined);
         game.gameBatch.setProjectionMatrix(game.camera.combined);
     }
 

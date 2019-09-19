@@ -1,4 +1,5 @@
 package com.mygdx.game;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -14,13 +15,15 @@ public class MenuScreen extends ScreenAdapter {
     }
 
     @Override
-    public void show(){
+    public void show() {
 
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean keyDown(int keyCode) {
                 if (keyCode == Input.Keys.SPACE) {
                     game.setScreen(new GameScreen(game));
+                    game.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                    game.camera.zoom = 2;
                 }
                 return true;
             }
@@ -38,7 +41,7 @@ public class MenuScreen extends ScreenAdapter {
     }
 
     @Override
-    public void hide(){
+    public void hide() {
         Gdx.input.setInputProcessor(null);
     }
 }
