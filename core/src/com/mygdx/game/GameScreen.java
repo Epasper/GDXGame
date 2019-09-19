@@ -135,40 +135,79 @@ public class GameScreen extends ScreenAdapter {
         float[] vertices = game.levelFactory.groundVertices;
         for (int i = 0; i < worldLength - 1; i++) {
             if (vertices[2 * i + 3] < vertices[2 * i + 1]) {
-                game.gameBatch.draw(game.groundTileDownTexture,
-                        vertices[2 * i] - 2,
-                        vertices[2 * i + 1],
-                        5f,
-                        5f);
-                game.gameBatch.draw(game.groundTileDownTexture,
-                        vertices[2 * i] + 3,
-                        vertices[2 * i + 1] - 5,
-                        5f,
-                        5f);
+                paintDownwardTile(vertices, i);
             } else if (vertices[2 * i + 3] > vertices[2 * i + 1]) {
-                game.gameBatch.draw(game.groundTileUpTexture,
-                        vertices[2 * i] - 2,
-                        vertices[2 * i + 1] + 5,
-                        5f,
-                        5f);
-                game.gameBatch.draw(game.groundTileUpTexture,
-                        vertices[2 * i] + 3,
-                        vertices[2 * i + 1] + 10,
-                        5f,
-                        5f);
+                paintUpwardTile(vertices, i);
             } else {
-                game.gameBatch.draw(game.groundTileTexture,
-                        vertices[2 * i] - 2,
-                        vertices[2 * i + 1],
-                        5f,
-                        5f);
-                game.gameBatch.draw(game.groundTileTexture,
-                        vertices[2 * i] + 3,
-                        vertices[2 * i + 1],
+                paintAStraightTile(vertices, i);
+            }
+        }
+    }
+
+    private void fillGroundWithTiles(float initialXPos, float initialYPos, boolean isDownward, boolean isUpward) {
+        for (int i = 0; i > -12; i--) {
+            if (!isUpward || i != 0) {
+                game.gameBatch.draw(game.groundInnerTexture,
+                        initialXPos,
+                        initialYPos + (5 * i),
                         5f,
                         5f);
             }
+            if (isDownward && i == 0) {
+                continue;
+            }
+            game.gameBatch.draw(game.groundInnerTexture,
+                    initialXPos + 5,
+                    initialYPos + (5 * i),
+                    5f,
+                    5f);
         }
+    }
+
+
+
+    private void paintAStraightTile(float[] vertices, int i) {
+        game.gameBatch.draw(game.groundTileTexture,
+                vertices[2 * i] - 2,
+                vertices[2 * i + 1],
+                5f,
+                5f);
+        game.gameBatch.draw(game.groundTileTexture,
+                vertices[2 * i] + 3,
+                vertices[2 * i + 1],
+                5f,
+                5f);
+        fillGroundWithTiles(vertices[2 * i] - 2, vertices[2 * i + 1] - 5, false, false);
+    }
+
+    private void paintUpwardTile(float[] vertices, int i) {
+        game.gameBatch.draw(game.groundTileUpTexture,
+                vertices[2 * i] - 2,
+                vertices[2 * i + 1] + 5,
+                5f,
+                5f);
+        game.gameBatch.draw(game.groundTileUpTexture,
+                vertices[2 * i] + 3,
+                vertices[2 * i + 1] + 10,
+                5f,
+                5f);
+        fillGroundWithTiles(vertices[2 * i] - 2, vertices[2 * i + 1] + 5, false, true);
+
+    }
+
+    private void paintDownwardTile(float[] vertices, int i) {
+        game.gameBatch.draw(game.groundTileDownTexture,
+                vertices[2 * i] - 2,
+                vertices[2 * i + 1],
+                5f,
+                5f);
+        game.gameBatch.draw(game.groundTileDownTexture,
+                vertices[2 * i] + 3,
+                vertices[2 * i + 1] - 5,
+                5f,
+                5f);
+        fillGroundWithTiles(vertices[2 * i] - 2, vertices[2 * i + 1] - 5, true, false);
+
     }
 
     private void drawABackground() {

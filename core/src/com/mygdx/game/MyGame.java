@@ -31,6 +31,7 @@ public class MyGame extends Game {
     BitmapFont font;
     Texture backgroundTexture;
     Texture groundTileTexture;
+    Texture groundInnerTexture;
     Texture groundTileDownTexture;
     Texture groundTileUpTexture;
     World world;
@@ -71,6 +72,7 @@ public class MyGame extends Game {
         camera.update();
         backgroundTexture = new Texture(Gdx.files.internal("background_image.jpg"));
         groundTileTexture = new Texture(Gdx.files.internal("GroundTile.png"));
+        groundInnerTexture = new Texture(Gdx.files.internal("DeepEarthTile.png"));
         groundTileDownTexture = new Texture(Gdx.files.internal("GroundTileDown.png"));
         groundTileUpTexture = new Texture(Gdx.files.internal("GroundTileUp.png"));
         levelFactory = new LevelFactory(this);
@@ -108,6 +110,7 @@ public class MyGame extends Game {
         screensBatch.dispose();
         backgroundTexture.dispose();
         groundTileTexture.dispose();
+        groundInnerTexture.dispose();
         groundTileDownTexture.dispose();
         groundTileUpTexture.dispose();
         world.dispose();

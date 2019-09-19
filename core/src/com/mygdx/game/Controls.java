@@ -55,9 +55,9 @@ public class Controls {
         if (cameraXPos - playerXPos < cameraBorderLeft) {
             game.camera.translate(cameraSpeedX * Gdx.graphics.getDeltaTime(), 0);
         }
-        if (Gdx.input.isKeyPressed((Input.Keys.Q))) {
+        if (Gdx.input.isKeyPressed((Input.Keys.PLUS))) {
             game.camera.zoom -= Gdx.graphics.getDeltaTime();
-        } else if (Gdx.input.isKeyPressed((Input.Keys.E))) {
+        } else if (Gdx.input.isKeyPressed((Input.Keys.MINUS))) {
             game.camera.zoom += Gdx.graphics.getDeltaTime();
         }
     }
