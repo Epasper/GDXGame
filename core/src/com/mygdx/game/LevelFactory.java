@@ -13,6 +13,10 @@ public class LevelFactory {
     private MyGame game;
     Level level = new Level();
 
+    public int worldLength = 50;
+    float[] groundVertices = new float[2 * worldLength];
+    public int xPositionSpawningOffset = -20;
+
 
     public LevelFactory(MyGame game) {
         this.game = game;
@@ -34,20 +38,19 @@ public class LevelFactory {
     }
 
     public Body createFloor(BodyDef.BodyType type, float x1, float y1, float x2, float y2, float density) {
-        int worldLength = 50;
+
         Random random = new Random();
-        float[] vertices = new float[2*worldLength];
-        float randX = -20;
+        float randX = xPositionSpawningOffset;
         float randY = -10;
         for (int i = 0; i < worldLength; i++) {
             int randomizedDirection = random.nextInt(3) - 1;
             randX += 10;
             randY += 10 * randomizedDirection;
-            vertices[2 * i] = randX;
-            vertices[2 * i + 1] = randY;
+            groundVertices[2 * i] = randX;
+            groundVertices[2 * i + 1] = randY;
         }
         ChainShape floorEdge = new ChainShape();
-        floorEdge.createChain(vertices);
+        floorEdge.createChain(groundVertices);
         //EdgeShape poly = new EdgeShape();
         //poly.set(new Vector2(0, 0), new Vector2(x2 - x1, y2 - y1));
 
@@ -56,7 +59,7 @@ public class LevelFactory {
         Body body = game.world.createBody(def);
         body.createFixture(floorEdge, density);
         body.setTransform(x1, y1, 0);
-       // poly.dispose();
+        // poly.dispose();
         floorEdge.dispose();
 
         return body;

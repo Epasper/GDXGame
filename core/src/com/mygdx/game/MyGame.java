@@ -31,6 +31,8 @@ public class MyGame extends Game {
     BitmapFont font;
     Texture backgroundTexture;
     Texture groundTileTexture;
+    Texture groundTileDownTexture;
+    Texture groundTileUpTexture;
     World world;
     Box2DDebugRenderer debugRenderer;
     PlayerCharacter playerCharacter;
@@ -69,6 +71,8 @@ public class MyGame extends Game {
         camera.update();
         backgroundTexture = new Texture(Gdx.files.internal("background_image.jpg"));
         groundTileTexture = new Texture(Gdx.files.internal("GroundTile.png"));
+        groundTileDownTexture = new Texture(Gdx.files.internal("GroundTileDown.png"));
+        groundTileUpTexture = new Texture(Gdx.files.internal("GroundTileUp.png"));
         levelFactory = new LevelFactory(this);
         groundBody = levelFactory.createFloor(BodyDef.BodyType.StaticBody,
                 -2,
@@ -104,6 +108,8 @@ public class MyGame extends Game {
         screensBatch.dispose();
         backgroundTexture.dispose();
         groundTileTexture.dispose();
+        groundTileDownTexture.dispose();
+        groundTileUpTexture.dispose();
         world.dispose();
         debugRenderer.dispose();
     }

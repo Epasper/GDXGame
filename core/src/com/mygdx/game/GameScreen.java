@@ -131,12 +131,43 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void paintTheFloorImages() {
-        for (int i = 0; i < 10; i++) {
-            game.gameBatch.draw(game.groundTileTexture, -4f +
-                            (i * 23f),
-                    0f,
-                    23f,
-                    7.5f);
+        int worldLength = game.levelFactory.worldLength;
+        float[] vertices = game.levelFactory.groundVertices;
+        for (int i = 0; i < worldLength - 1; i++) {
+            if (vertices[2 * i + 3] < vertices[2 * i + 1]) {
+                game.gameBatch.draw(game.groundTileDownTexture,
+                        vertices[2 * i] - 2,
+                        vertices[2 * i + 1],
+                        5f,
+                        5f);
+                game.gameBatch.draw(game.groundTileDownTexture,
+                        vertices[2 * i] + 3,
+                        vertices[2 * i + 1] - 5,
+                        5f,
+                        5f);
+            } else if (vertices[2 * i + 3] > vertices[2 * i + 1]) {
+                game.gameBatch.draw(game.groundTileUpTexture,
+                        vertices[2 * i] - 2,
+                        vertices[2 * i + 1] + 5,
+                        5f,
+                        5f);
+                game.gameBatch.draw(game.groundTileUpTexture,
+                        vertices[2 * i] + 3,
+                        vertices[2 * i + 1] + 10,
+                        5f,
+                        5f);
+            } else {
+                game.gameBatch.draw(game.groundTileTexture,
+                        vertices[2 * i] - 2,
+                        vertices[2 * i + 1],
+                        5f,
+                        5f);
+                game.gameBatch.draw(game.groundTileTexture,
+                        vertices[2 * i] + 3,
+                        vertices[2 * i + 1],
+                        5f,
+                        5f);
+            }
         }
     }
 
