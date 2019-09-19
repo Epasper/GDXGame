@@ -28,8 +28,10 @@ public class Controls {
         float playerXPos = playerCharacter.playerSprite.getX();
         float playerYPos = playerCharacter.playerSprite.getY();
         final float cameraSpeedX = maxVelocity;
-        final float cameraBorderRight = 15f;
-        final float cameraBorderLeft = -15f;
+        final float cameraBorderRight = 10f;
+        final float cameraBorderLeft = -10f;
+        final float cameraBorderUp = 10f;
+        final float cameraBorderDown = -10f;
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             game.camera.translate(0, game.levelHeight / 2f * Gdx.graphics.getDeltaTime());
@@ -38,6 +40,15 @@ public class Controls {
             game.camera.translate(0, -game.levelHeight / 2f * Gdx.graphics.getDeltaTime());
         }
 
+        //camera translation upon getting closer to top/bottom edge
+        if (cameraYPos - playerYPos < cameraBorderUp) {
+            game.camera.translate(0, cameraSpeedX * Gdx.graphics.getDeltaTime());
+        }
+        if (cameraYPos - playerYPos > cameraBorderDown) {
+            game.camera.translate(0, -cameraSpeedX * Gdx.graphics.getDeltaTime());
+        }
+
+        //camera translation upon getting closer to left/right edge
         if (cameraXPos - playerXPos > cameraBorderRight) {
             game.camera.translate(-cameraSpeedX * Gdx.graphics.getDeltaTime(), 0);
         }
