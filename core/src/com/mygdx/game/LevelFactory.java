@@ -42,8 +42,16 @@ public class LevelFactory {
         Random random = new Random();
         float randX = xPositionSpawningOffset;
         float randY = -10;
+        int randomizedDirection = 0;
         for (int i = 0; i < worldLength; i++) {
-            int randomizedDirection = random.nextInt(3) - 1;
+            if (randomizedDirection > 0) {
+                randomizedDirection = random.nextInt(2);
+            } else if (randomizedDirection < 0) {
+                randomizedDirection = random.nextInt(2) - 1;
+            } else {
+                randomizedDirection = random.nextInt(3) - 1;
+            }
+
             randX += 10;
             randY += 10 * randomizedDirection;
             groundVertices[2 * i] = randX;
