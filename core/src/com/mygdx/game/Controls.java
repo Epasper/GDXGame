@@ -9,7 +9,7 @@ public class Controls {
     private MyGame game;
     PlayerCharacter playerCharacter;
     //todo move the velocity to PlayerChar Class
-    int maxVelocity = 50;
+    int maxVelocity = 35;
     int jumpVelocity = 75;
 
     Contacts groundSensor;

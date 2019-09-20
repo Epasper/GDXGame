@@ -16,8 +16,8 @@ public class Monster {
 
     ShapeFactory shapeFactory;
 
-    float rangeLeft = 30f;
-    float rangeRight = 30f;
+    float rangeLeft = 40f;
+    float rangeRight = 40f;
     float monsterSpeed = 20f;
     float initialXPos;
     float initialYPos;
