@@ -8,15 +8,16 @@ public class Controls {
 
     private MyGame game;
     PlayerCharacter playerCharacter;
+    //todo move the velocity to PlayerChar Class
     int maxVelocity = 50;
     int jumpVelocity = 75;
 
-    GroundContactListener groundSensor;
+    Contacts groundSensor;
 
     Controls(MyGame game) {
         this.game = game;
         playerCharacter = game.playerCharacter;
-        groundSensor = new GroundContactListener(game, playerCharacter.body, game.groundBody);
+        groundSensor = new Contacts(game, game.groundBody);
         game.world.setContactListener(groundSensor);
     }
 
@@ -71,12 +72,6 @@ public class Controls {
 
     public void resetTheXVelocities() {
         game.mainCharacterBody.setLinearVelocity(0, game.mainCharacterBody.getLinearVelocity().y);
-    }
-
-    public void checkTheJumpingAllowance() {
-        if (game.mainCharacterBody.getLinearVelocity().y == 0) {
-            //sensor.playerOnGround = true;
-        }
     }
 
     void addTheKeyInput() {

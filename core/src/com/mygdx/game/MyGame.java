@@ -29,6 +29,7 @@ public class MyGame extends Game {
     World world;
     Box2DDebugRenderer debugRenderer;
     PlayerCharacter playerCharacter;
+    Monster monster;
     LevelFactory levelFactory;
     HUDElements hud;
 
@@ -58,6 +59,7 @@ public class MyGame extends Game {
         viewport = new FillViewport(levelWidth, levelHeight, camera);
         viewport.apply();
         playerCharacter = new PlayerCharacter(this);
+        monster = new Monster(this, 120f, 80f);
         mainCharacterBody = playerCharacter.body;
         //camera.position.set(mainCharacterBody.getPosition().x,
        //         mainCharacterBody.getPosition().y, 0);

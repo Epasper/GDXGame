@@ -76,6 +76,8 @@ public class GameScreen extends ScreenAdapter {
 
         drawAFrame();
 
+        game.monster.setMonsterInMotion();
+
         game.debugRenderer.render(game.world, game.camera.combined);
         game.world.step(1 / 60f, 6, 2);
 
@@ -92,7 +94,6 @@ public class GameScreen extends ScreenAdapter {
         controls.groundSensor.bodiesToBeRemoved.clear();
 
         controls.resetTheXVelocities();
-        controls.checkTheJumpingAllowance();
 
     }
 
@@ -114,6 +115,12 @@ public class GameScreen extends ScreenAdapter {
                 spriteSize,
                 spriteSize);
 
+        game.monster.monsterSprite.setPosition(game.monster.body.getPosition().x, game.monster.body.getPosition().y);
+        game.gameBatch.draw(game.monster.monsterSprite,
+                game.monster.monsterSprite.getX() - spriteSize / 2f,
+                game.monster.monsterSprite.getY() - spriteSize / 2f,
+                spriteSize,
+                spriteSize);
 
         game.gameBatch.end();
 
@@ -166,7 +173,6 @@ public class GameScreen extends ScreenAdapter {
                     5f);
         }
     }
-
 
 
     private void paintAStraightTile(float[] vertices, int i) {
@@ -226,7 +232,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void setCamera() {
-        game.camera.position.set(game.mainCharacterBody.getPosition().x,game.mainCharacterBody.getPosition().y, 0);
+        game.camera.position.set(game.mainCharacterBody.getPosition().x, game.mainCharacterBody.getPosition().y, 0);
         game.camera.update();
         game.gameBatch.setProjectionMatrix(game.camera.combined);
     }

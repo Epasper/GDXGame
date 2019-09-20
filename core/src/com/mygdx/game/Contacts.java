@@ -3,19 +3,23 @@ package com.mygdx.game;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 
-public class GroundContactListener implements ContactListener {
+public class Contacts implements ContactListener {
 
     Body playerBody;
     Body groundBody;
     MyGame game;
+    PlayerCharacter playerCharacter;
+    Monster monster;
     Array<Body> bodiesToBeRemoved = new Array<>();
 
     public boolean playerOnGround = false;
 
-    public GroundContactListener(MyGame game, Body playerBody, Body groundBody) {
-        this.playerBody = playerBody;
+    public Contacts(MyGame game, Body groundBody) {
         this.groundBody = groundBody;
         this.game = game;
+        this.playerCharacter = game.playerCharacter;
+        this.playerBody = playerCharacter.body;
+        this.monster = game.monster;
     }
 
     @Override
@@ -24,6 +28,15 @@ public class GroundContactListener implements ContactListener {
 
         final Fixture fixtureA = contact.getFixtureA();
         final Fixture fixtureB = contact.getFixtureB();
+
+        if ((fixtureA.getBody().getUserData().equals("monster") &&
+                fixtureB.getBody() == playerBody)
+                ||
+                (fixtureA.getBody() == playerBody &&
+                        fixtureB.getBody().getUserData().equals("monster"))) {
+            playerCharacter.hitPoints--;
+            monster.body.setLinearVelocity(0,50);
+        }
 
         if ((fixtureA.getBody() == groundBody &&
                 fixtureB.getBody() == playerBody)
