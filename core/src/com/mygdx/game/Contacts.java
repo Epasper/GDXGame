@@ -35,7 +35,10 @@ public class Contacts implements ContactListener {
                 (fixtureA.getBody() == playerBody &&
                         fixtureB.getBody().getUserData().equals("monster"))) {
             playerCharacter.hitPoints--;
-            monster.body.setLinearVelocity(0,30);
+            monster.body.applyForceToCenter(-10 * monster.body.getLinearVelocity().x,
+                    200f,
+                    true);
+            monster.stopTheMovement = true;
         }
 
         if ((fixtureA.getBody() == groundBody &&

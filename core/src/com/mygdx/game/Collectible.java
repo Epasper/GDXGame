@@ -34,12 +34,17 @@ public class Collectible extends Sprite {
         fixtureDef.friction = 0f;
         fixtureDef.restitution = 0f;
         fixtureDef.isSensor = true;
+        Filter filter = new Filter();
+        filter.categoryBits = CollisionCategories.CATEGORY_COLLECTIBLES;
+        filter.maskBits = CollisionCategories.MASK_COLLECTIBLE;
+        collectibleBody.getFixtureList().get(0).setUserData("coin");
+        collectibleBody.getFixtureList().get(0).setFilterData(filter);
+        collectibleBody.setUserData("coin");
+
         fixtureDef.filter.categoryBits = CollisionCategories.CATEGORY_COLLECTIBLES;
         fixtureDef.filter.maskBits = CollisionCategories.MASK_COLLECTIBLE;
 
-        collectibleBody.setUserData("coin");
-        collectibleBody.createFixture(fixtureDef);
-        collectibleBody.createFixture(fixtureDef).setUserData("coin");
+
     }
 
     public void destroyBody () {

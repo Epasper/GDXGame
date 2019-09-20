@@ -27,7 +27,7 @@ public class PlayerCharacter {
                 20,
                 2,
                 2,
-                5);
+                0.005f);
         Filter filter = new Filter();
         filter.categoryBits = CollisionCategories.CATEGORY_PLAYER;
         filter.maskBits = CollisionCategories.MASK_PLAYER;

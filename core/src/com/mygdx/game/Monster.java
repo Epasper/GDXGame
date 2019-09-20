@@ -23,6 +23,9 @@ public class Monster {
     float initialYPos;
     boolean isGoingRight;
     boolean isGoingLeft = false;
+    boolean stopTheMovement = true;
+    final int movementBreakLength = 20;
+    int movementIterator = 0;
 
     Sprite monsterSprite = new Sprite(new Texture("Monster.png"));
 
@@ -37,7 +40,7 @@ public class Monster {
                 initialYPos,
                 2,
                 2,
-                5);
+                0.005f);
         //body.applyForce(0, -200, body.getPosition().x, body.getPosition().y, true);
 
 /*        body.getPosition().x = initialXPos;
@@ -65,9 +68,16 @@ public class Monster {
             isGoingRight = false;
             isGoingLeft = true;
         }
-        if (isGoingLeft) {
+        if (stopTheMovement) {
+            movementIterator++;
+            if (movementIterator > movementBreakLength) {
+                stopTheMovement = false;
+                movementIterator = 0;
+            }
+        }
+        if (isGoingLeft && !stopTheMovement) {
             body.setLinearVelocity(-monsterSpeed, body.getLinearVelocity().y);
-        } else if (isGoingRight) {
+        } else if (isGoingRight && !stopTheMovement) {
             body.setLinearVelocity(monsterSpeed, body.getLinearVelocity().y);
         }
     }

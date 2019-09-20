@@ -46,9 +46,6 @@ public class LevelFactory {
         float randX = xPositionSpawningOffset;
         float randY = -10;
         int randomizedDirection = 0;
-        int coinSpawnRoll = 0;
-        int heightRoll = 0;
-        final int randomChanceOfCoinSpawn = 60;
         for (int i = 0; i < worldLength; i++) {
             if (randomizedDirection > 0) {
                 randomizedDirection = random.nextInt(2);
@@ -63,7 +60,7 @@ public class LevelFactory {
             groundVertices[2 * i] = randX;
             groundVertices[2 * i + 1] = randY;
 
-            rollForCoinSpawn(random, randX, randY, randomChanceOfCoinSpawn);
+            rollForCoinSpawn(random, randX, randY);
         }
         ChainShape floorEdge = new ChainShape();
         floorEdge.createChain(groundVertices);
@@ -81,7 +78,8 @@ public class LevelFactory {
         return body;
     }
 
-    private void rollForCoinSpawn(Random random, float randX, float randY, int randomChanceOfCoinSpawn) {
+    private void rollForCoinSpawn(Random random, float randX, float randY) {
+        final int randomChanceOfCoinSpawn = 60;
         int coinSpawnRoll;
         int heightRoll;
         coinSpawnRoll = random.nextInt(100);
