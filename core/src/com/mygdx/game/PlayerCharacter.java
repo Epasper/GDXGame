@@ -18,7 +18,7 @@ public class PlayerCharacter {
 
     ShapeFactory shapeFactory;
 
-    Sprite playerSprite = new Sprite(new Texture("Mario.png"));
+    Sprite playerSprite = new Sprite(new Texture("Player.png"));
 
     PlayerCharacter(MyGame game) {
         hitPoints = 50;

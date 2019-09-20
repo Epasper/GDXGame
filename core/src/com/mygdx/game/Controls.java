@@ -32,6 +32,8 @@ public class Controls {
         final float cameraBorderLeft = -2f;
         final float cameraBorderUp = 5f;
         final float cameraBorderDown = -15f;
+        float cameraX;
+        float cameraY;
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             game.camera.translate(0, game.levelHeight / 2f * Gdx.graphics.getDeltaTime());
@@ -45,21 +47,21 @@ public class Controls {
             game.playerCharacter.hitPoints--;
         }
 
-        //camera translation upon getting closer to top/bottom edge
+/*        //camera translation upon getting closer to top/bottom edge
         if (cameraYPos - playerYPos < cameraBorderUp) {
-            game.camera.translate(0, cameraSpeedX * Gdx.graphics.getDeltaTime());
+            //game.camera.translate(0, cameraSpeedX * Gdx.graphics.getDeltaTime());
         }
         if (cameraYPos - playerYPos > cameraBorderDown) {
-            game.camera.translate(0, -cameraSpeedX * Gdx.graphics.getDeltaTime());
+            //game.camera.translate(0, -cameraSpeedX * Gdx.graphics.getDeltaTime());
         }
 
         //camera translation upon getting closer to left/right edge
         if (cameraXPos - playerXPos > cameraBorderRight) {
-            game.camera.translate(-cameraSpeedX * Gdx.graphics.getDeltaTime(), 0);
+            //game.camera.translate(-cameraSpeedX * Gdx.graphics.getDeltaTime(), 0);
         }
         if (cameraXPos - playerXPos < cameraBorderLeft) {
-            game.camera.translate(cameraSpeedX * Gdx.graphics.getDeltaTime(), 0);
-        }
+            //game.camera.translate(cameraSpeedX * Gdx.graphics.getDeltaTime(), 0);
+        }*/
         if (Gdx.input.isKeyPressed((Input.Keys.PLUS))) {
             game.camera.zoom -= Gdx.graphics.getDeltaTime();
         } else if (Gdx.input.isKeyPressed((Input.Keys.MINUS))) {

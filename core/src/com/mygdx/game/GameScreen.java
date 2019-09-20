@@ -226,6 +226,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void setCamera() {
+        game.camera.position.set(game.mainCharacterBody.getPosition().x,game.mainCharacterBody.getPosition().y, 0);
         game.camera.update();
         game.gameBatch.setProjectionMatrix(game.camera.combined);
     }

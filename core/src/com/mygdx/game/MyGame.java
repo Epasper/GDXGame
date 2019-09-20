@@ -59,8 +59,8 @@ public class MyGame extends Game {
         viewport.apply();
         playerCharacter = new PlayerCharacter(this);
         mainCharacterBody = playerCharacter.body;
-        camera.position.set(mainCharacterBody.getPosition().x,
-                mainCharacterBody.getPosition().y, 0);
+        //camera.position.set(mainCharacterBody.getPosition().x,
+       //         mainCharacterBody.getPosition().y, 0);
         camera.update();
         backgroundTexture = new Texture(Gdx.files.internal("background_image.jpg"));
         groundTileTexture = new Texture(Gdx.files.internal("GroundTile.png"));
