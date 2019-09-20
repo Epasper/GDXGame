@@ -62,7 +62,7 @@ public class MyGame extends Game {
         monster = new Monster(this, 120f, 80f);
         mainCharacterBody = playerCharacter.body;
         //camera.position.set(mainCharacterBody.getPosition().x,
-       //         mainCharacterBody.getPosition().y, 0);
+        //         mainCharacterBody.getPosition().y, 0);
         camera.update();
         backgroundTexture = new Texture(Gdx.files.internal("background_image.jpg"));
         groundTileTexture = new Texture(Gdx.files.internal("GroundTile.png"));
@@ -72,8 +72,6 @@ public class MyGame extends Game {
         levelFactory = new LevelFactory(this);
         groundBody = levelFactory.createFloor(BodyDef.BodyType.StaticBody,
                 -2,
-                5f,
-                300,
                 5f,
                 0);
         groundBody.setUserData("ground");

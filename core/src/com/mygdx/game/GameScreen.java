@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-
-import java.util.Random;
 
 // todo https://www.gamefromscratch.com/post/2013/11/27/LibGDX-Tutorial-9-Scene2D-Part-1.aspx <-- this class should probably extend an Application Listener and be a Scene instead of Screen
 
@@ -18,28 +15,11 @@ public class GameScreen extends ScreenAdapter {
     private MyGame game;
     private Controls controls;
 
-
-    boolean spawnIsDone = false;
-
     Stage gameStage;
-
-    private float circleX = 300;
-    private float circleY = 150;
-    private float circleRadius = 50;
-
-    Array<Collectible> coinsList = new Array<>();
-
 
     public GameScreen(MyGame game) {
         this.game = game;
         controls = new Controls(game);
-        Random random = new Random();
-        for (int i = 0; i < 15; i++) {
-            float xPos = random.nextInt(200);
-            float yPos = random.nextInt(10);
-            Collectible coin = new Collectible(game, xPos, yPos + 5, "Coin.png");
-            coinsList.add(coin);
-        }
     }
 
     //todo support for different screen resolutions
@@ -48,16 +28,6 @@ public class GameScreen extends ScreenAdapter {
     public void show() {
         gameStage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(gameStage);
-        /*Gdx.input.setInputProcessor(new InputAdapter() {
-            @Override
-            public boolean touchDown(int x, int y, int pointer, int button) {
-                int renderY = game.levelHeight - y;
-                if (Vector2.dst(circleX, circleY, x, renderY) < circleRadius) {
-                    game.setScreen(new YouWinScreen(game));
-                }
-                return true;
-            }
-        });*/
         System.out.println("End of Show");
     }
 
@@ -82,10 +52,10 @@ public class GameScreen extends ScreenAdapter {
         game.world.step(1 / 60f, 6, 2);
 
         for (Body currentBody : controls.groundSensor.bodiesToBeRemoved) {
-            for (int i = 0; i < coinsList.size; i++) {
-                if (coinsList.get(i).collectibleBody == currentBody) {
-                    coinsList.get(i).collectibleBody = null;
-                    coinsList.removeIndex(i);
+            for (int i = 0; i < game.levelFactory.coinsList.size; i++) {
+                if (game.levelFactory.coinsList.get(i).collectibleBody == currentBody) {
+                    game.levelFactory.coinsList.get(i).collectibleBody = null;
+                    game.levelFactory.coinsList.removeIndex(i);
                 }
             }
             game.world.destroyBody(currentBody);
@@ -129,7 +99,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void drawTheCoins() {
-        for (Collectible currentCoin : coinsList) {
+        for (Collectible currentCoin : game.levelFactory.coinsList) {
             final float spriteSize = 4f;
             game.gameBatch.draw(currentCoin,
                     currentCoin.getX() - spriteSize / 2f,
