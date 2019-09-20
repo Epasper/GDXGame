@@ -13,6 +13,7 @@ public class Monster {
     private MyGame game;
 
     int hitPoints;
+    int monsterID;
 
     ShapeFactory shapeFactory;
 
@@ -27,9 +28,10 @@ public class Monster {
     final int movementBreakLength = 20;
     int movementIterator = 0;
 
-    Sprite monsterSprite = new Sprite(new Texture("Monster.png"));
+    Sprite monsterSprite;
 
-    Monster(MyGame game, float initialXPos, float initialYPos) {
+    Monster(MyGame game, float initialXPos, float initialYPos, int monsterID) {
+        this.monsterSprite =  new Sprite(new Texture("Monster.png"));
         hitPoints = 50;
         this.game = game;
         this.initialXPos = initialXPos;
@@ -53,7 +55,8 @@ public class Monster {
         filter.categoryBits = CollisionCategories.CATEGORY_MONSTER;
         filter.maskBits = CollisionCategories.MASK_MONSTER;
         body.getFixtureList().get(0).setFilterData(filter);
-        body.setUserData("monster");
+        this.monsterID = monsterID;
+        body.setUserData("monster___" + monsterID);
 
         body.setFixedRotation(true);
 

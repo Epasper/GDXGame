@@ -14,7 +14,10 @@ public class LevelFactory {
     private MyGame game;
     Level level = new Level();
 
+    int monsterID = 10;
+
     public Array<Collectible> coinsList = new Array<>();
+    public Array<Monster> monsterList = new Array<>();
 
     public int worldLength = 50;
     float[] groundVertices = new float[2 * worldLength];
@@ -61,6 +64,8 @@ public class LevelFactory {
             groundVertices[2 * i + 1] = randY;
 
             rollForCoinSpawn(random, randX, randY);
+
+            rollForMonsterSpawn(random, randX, randY);
         }
         ChainShape floorEdge = new ChainShape();
         floorEdge.createChain(groundVertices);
@@ -76,6 +81,19 @@ public class LevelFactory {
         floorEdge.dispose();
 
         return body;
+    }
+
+    private void rollForMonsterSpawn(Random random, float randX, float randY) {
+        final int randomChanceOfCoinSpawn = 10;
+        int coinSpawnRoll;
+        int heightRoll;
+        coinSpawnRoll = random.nextInt(100);
+        if (coinSpawnRoll < randomChanceOfCoinSpawn) {
+            heightRoll = random.nextInt(30);
+            Monster currentMonster = new Monster(game, randX, randY + 15 + heightRoll, monsterID);
+            monsterID++;
+            monsterList.add(currentMonster);
+        }
     }
 
     private void rollForCoinSpawn(Random random, float randX, float randY) {

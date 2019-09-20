@@ -9,7 +9,7 @@ public class Contacts implements ContactListener {
     Body groundBody;
     MyGame game;
     PlayerCharacter playerCharacter;
-    Monster monster;
+    Array<Monster> allMonsters;
     Array<Body> bodiesToBeRemoved = new Array<>();
 
     public boolean playerOnGround = false;
@@ -19,7 +19,7 @@ public class Contacts implements ContactListener {
         this.game = game;
         this.playerCharacter = game.playerCharacter;
         this.playerBody = playerCharacter.body;
-        this.monster = game.monster;
+        this.allMonsters = game.levelFactory.monsterList;
     }
 
     @Override
@@ -29,16 +29,35 @@ public class Contacts implements ContactListener {
         final Fixture fixtureA = contact.getFixtureA();
         final Fixture fixtureB = contact.getFixtureB();
 
-        if ((fixtureA.getBody().getUserData().equals("monster") &&
+        if ((fixtureA.getBody().getUserData().toString().contains("monster") &&
                 fixtureB.getBody() == playerBody)
                 ||
                 (fixtureA.getBody() == playerBody &&
-                        fixtureB.getBody().getUserData().equals("monster"))) {
+                        fixtureB.getBody().getUserData().toString().contains("monster"))) {
+/*            System.out.println("USER DATA FROM MONSTER:"+fixtureB.getBody().getUserData().toString().substring(10));
+            System.out.println("USER DATA FROM MONSTER:"+fixtureA.getBody().getUserData().toString().substring(10));*/
+            int monsterID = 0;
+            monsterID = Integer.parseInt(fixtureB.getBody().getUserData().toString().substring(10));
+            if (monsterID < 10) {
+                monsterID = Integer.parseInt(fixtureA.getBody().getUserData().toString().substring(10));
+            }
+            Monster currentMonster = null;
+            System.out.println("Monster id before checking: " + monsterID);
+            for (Monster monster : game.levelFactory.monsterList) {
+                System.out.println("Current monster ID: " + monster.monsterID);
+                if (monster.monsterID == monsterID) {
+                    currentMonster = monster;
+                }
+            }
             playerCharacter.hitPoints--;
-            monster.body.applyForceToCenter(-10 * monster.body.getLinearVelocity().x,
-                    200f,
-                    true);
-            monster.stopTheMovement = true;
+            System.out.println("Check if the monster was found:" + currentMonster);
+            try {
+                currentMonster.body.applyForceToCenter(-10 * currentMonster.body.getLinearVelocity().x,
+                        200f,
+                        true);
+                currentMonster.stopTheMovement = true;
+            } catch (NullPointerException ignored) {
+            }
         }
 
         if ((fixtureA.getBody() == groundBody &&

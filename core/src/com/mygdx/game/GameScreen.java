@@ -46,7 +46,9 @@ public class GameScreen extends ScreenAdapter {
 
         drawAFrame();
 
-        game.monster.setMonsterInMotion();
+        for (Monster monster : game.levelFactory.monsterList) {
+            monster.setMonsterInMotion();
+        }
 
         game.debugRenderer.render(game.world, game.camera.combined);
         game.world.step(1 / 60f, 6, 2);
@@ -85,12 +87,14 @@ public class GameScreen extends ScreenAdapter {
                 spriteSize,
                 spriteSize);
 
-        game.monster.monsterSprite.setPosition(game.monster.body.getPosition().x, game.monster.body.getPosition().y);
-        game.gameBatch.draw(game.monster.monsterSprite,
-                game.monster.monsterSprite.getX() - spriteSize / 2f,
-                game.monster.monsterSprite.getY() - spriteSize / 2f,
-                spriteSize,
-                spriteSize);
+        for (Monster monster : game.levelFactory.monsterList) {
+            monster.monsterSprite.setPosition(monster.body.getPosition().x, monster.body.getPosition().y);
+            game.gameBatch.draw(monster.monsterSprite,
+                    monster.monsterSprite.getX() - spriteSize / 2f,
+                    monster.monsterSprite.getY() - spriteSize / 2f,
+                    spriteSize,
+                    spriteSize);
+        }
 
         game.gameBatch.end();
 
