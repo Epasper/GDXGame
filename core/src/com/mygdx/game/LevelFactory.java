@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 
@@ -34,10 +33,22 @@ public class LevelFactory {
         int randomizedDirection = 0;
         for (int i = 0; i < worldLength; i++) {
 
-            randomizedDirection = calculateRandomizedDirection(random, randomizedDirection);
 
-            final int chanceOfFloatingIslandSpawning = 15;
-            int floatingIslandSpawnRoll = random.nextInt(100);
+            int previousTile = randomizedDirection;
+
+            randomizedDirection = calculateRandomizedDirection(random, randomizedDirection);
+            boolean wasThePreviousTileHigher;
+            boolean wasThePreviousTileLower;
+            if (previousTile > randomizedDirection) {
+                wasThePreviousTileHigher = true;
+                wasThePreviousTileLower = false;
+            } else if (previousTile < randomizedDirection) {
+                wasThePreviousTileHigher = false;
+                wasThePreviousTileLower = true;
+            } else {
+                wasThePreviousTileHigher = false;
+                wasThePreviousTileLower = false;
+            }
 
             randX += 10;
             randY += 10 * randomizedDirection;
@@ -45,12 +56,7 @@ public class LevelFactory {
             groundVertices[2 * i] = randX;
             groundVertices[2 * i + 1] = randY;
 
-            int islandRandomPosition = random.nextInt(5) + 10;
-            float islandY = randY + islandRandomPosition;
-            int islandLength = (random.nextInt(4) + 1) * 5;
-            if (floatingIslandSpawnRoll < chanceOfFloatingIslandSpawning) {
-                createFloatingIsland(randX, islandY, 3, islandLength);
-            }
+            rollForFloatingIslandSpawn(random, randX, randY, wasThePreviousTileHigher, wasThePreviousTileLower);
 
             rollForCoinSpawn(random, randX, randY);
 
@@ -71,8 +77,43 @@ public class LevelFactory {
         return body;
     }
 
+    private void rollForFloatingIslandSpawn(Random random, float randX, float randY, boolean wasThePreviousTileHigher, boolean wasThePreviousTileLower) {
+        final int chanceOfFloatingIslandSpawning = 40;
+        int floatingIslandSpawnRoll = random.nextInt(100);
+        int islandVerticalPositionMinimum;
+        int islandLengthMaximum;
+        int islandLengthMinimum = 9;
+        int shiftTheIslandPosition;
+        if (wasThePreviousTileHigher) {
+            islandVerticalPositionMinimum = 25;
+            islandLengthMaximum = 10;
+            shiftTheIslandPosition = 10;
+        } else if (wasThePreviousTileLower) {
+            islandVerticalPositionMinimum = 25;
+            islandLengthMaximum = 10;
+            shiftTheIslandPosition = -10;
+        } else {
+            islandVerticalPositionMinimum = 25;
+            islandLengthMaximum = 10;
+            shiftTheIslandPosition = 10;
+        }
+        int islandRandomPosition = random.nextInt(5) + islandVerticalPositionMinimum;
+        float islandY = randY + islandRandomPosition;
+        int islandLength = (random.nextInt(islandLengthMaximum - islandLengthMinimum) +
+                islandLengthMinimum);
+        if (floatingIslandSpawnRoll < chanceOfFloatingIslandSpawning) {
+            createFloatingIsland(randX + shiftTheIslandPosition, islandY, 3, islandLength);
+        }
+    }
+
+    /*pseudocode:
+     * if - previous Tile Was higher than this one
+     * ---spawn an island higher and shorter
+     * else if - previous tile was lower
+     * ---spawn an island a bit higher*/
+
     public Body createFloatingIsland(float x1, float y1, float height, float length) {
-        float[] islandApexes = new float[]{x1, y1, x1 + length, y1, x1 + length, y1 + height, x1, y1 + height};
+        float[] islandApexes = new float[]{x1, y1, x1 - length, y1, x1 - length, y1 + height, x1, y1 + height};
         BodyDef.BodyType type = BodyDef.BodyType.StaticBody;
         PolygonShape poly = new PolygonShape();
         poly.set(islandApexes);
