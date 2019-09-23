@@ -68,7 +68,7 @@ public class MyGame extends Game {
         groundTileDownTexture = new Texture(Gdx.files.internal("GroundTileDown.png"));
         groundTileUpTexture = new Texture(Gdx.files.internal("GroundTileUp.png"));
         levelFactory = new LevelFactory(this);
-        groundBody = levelFactory.createFloor(BodyDef.BodyType.StaticBody,
+        groundBody = levelFactory.createLevel(BodyDef.BodyType.StaticBody,
                 -2,
                 5f,
                 0);

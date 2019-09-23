@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.Array;
 public class Contacts implements ContactListener {
 
     Body playerBody;
-    Body groundBody;
     MyGame game;
     PlayerCharacter playerCharacter;
     Array<Monster> allMonsters;
@@ -15,7 +14,6 @@ public class Contacts implements ContactListener {
     public boolean playerOnGround = false;
 
     public Contacts(MyGame game, Body groundBody) {
-        this.groundBody = groundBody;
         this.game = game;
         this.playerCharacter = game.playerCharacter;
         this.playerBody = playerCharacter.body;
@@ -60,11 +58,11 @@ public class Contacts implements ContactListener {
             }
         }
 
-        if ((fixtureA.getBody() == groundBody &&
+        if ((fixtureA.getBody().getUserData().toString().contains("ground") &&
                 fixtureB.getBody() == playerBody)
                 ||
                 (fixtureA.getBody() == playerBody &&
-                        fixtureB.getBody() == groundBody)) {
+                        fixtureB.getBody().getUserData().toString().contains("ground"))) {
             playerOnGround = true;
         }
         System.out.println(contact.getFixtureA().getUserData()

@@ -13,7 +13,7 @@ public class HUDElements extends SpriteBatch {
     public void addHudElements () {
         this.begin();
         for (int i = 0; i < player.hitPoints; i++) {
-            this.draw(hpBarTexture, (7 * i), 200, 7, 12);
+            this.draw(hpBarTexture, (7 * i), 250, 7, 12);
         }
         this.end();
     }
