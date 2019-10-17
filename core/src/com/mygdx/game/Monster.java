@@ -56,7 +56,7 @@ public class Monster {
         filter.maskBits = CollisionCategories.MASK_MONSTER;
         body.getFixtureList().get(0).setFilterData(filter);
         this.monsterID = monsterID;
-        body.setUserData("monster___" + monsterID);
+        body.getFixtureList().get(0).setUserData("monster___" + monsterID);
 
         body.setFixedRotation(true);
 

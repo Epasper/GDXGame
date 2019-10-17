@@ -19,7 +19,7 @@ public class PlayerCharacter {
 
     boolean isFacingLeft = true;
 
-    ShapeFactory shapeFactory;
+    private ShapeFactory shapeFactory;
 
     Sprite playerSprite = new Sprite(leftTexture);
 
@@ -37,6 +37,7 @@ public class PlayerCharacter {
         filter.categoryBits = CollisionCategories.CATEGORY_PLAYER;
         filter.maskBits = CollisionCategories.MASK_PLAYER;
         body.getFixtureList().get(0).setFilterData(filter);
+        body.getFixtureList().get(0).setUserData("player");
         body.setUserData("player");
         body.setFixedRotation(true);
     }

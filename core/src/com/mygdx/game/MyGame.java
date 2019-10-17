@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -17,6 +18,8 @@ public class MyGame extends Game {
 
     Body mainCharacterBody;
     Body groundBody;
+
+    Array<PlayerProjectile> projectileArray;
 
     SpriteBatch gameBatch;
     SpriteBatch screensBatch;
@@ -72,13 +75,14 @@ public class MyGame extends Game {
                 -2,
                 5f,
                 0);
-        groundBody.setUserData("ground");
+        groundBody.getFixtureList().get(0).setUserData("ground");
         Filter filter = new Filter();
         filter.categoryBits = CollisionCategories.CATEGORY_SCENERY;
         filter.maskBits = CollisionCategories.MASK_SCENERY;
         groundBody.getFixtureList().get(0).setFilterData(filter);
         hud = new HUDElements();
         hud.player = playerCharacter;
+        projectileArray = new Array<>();
     }
 
     @Override

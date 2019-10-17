@@ -15,6 +15,7 @@ public class GameScreen extends ScreenAdapter {
     private MyGame game;
     private Controls controls;
 
+
     Stage gameStage;
 
     public GameScreen(MyGame game) {
@@ -53,17 +54,36 @@ public class GameScreen extends ScreenAdapter {
         game.debugRenderer.render(game.world, game.camera.combined);
         game.world.step(1 / 60f, 6, 2);
 
-        for (Body currentBody : controls.groundSensor.bodiesToBeRemoved) {
+        //todo optimize the loops, so that the parameters are read and only one loop is being iterated (add user data to body on collision and get the user data here, then iterate through one list only)
+        for (Body currentBody : controls.contacts.bodiesToBeRemoved) {
             for (int i = 0; i < game.levelFactory.coinsList.size; i++) {
                 if (game.levelFactory.coinsList.get(i).collectibleBody == currentBody) {
                     game.levelFactory.coinsList.get(i).collectibleBody = null;
                     game.levelFactory.coinsList.removeIndex(i);
                 }
             }
+            for (int i = 0; i < game.levelFactory.monsterList.size; i++) {
+                if (game.levelFactory.monsterList.get(i).body == currentBody) {
+                    game.levelFactory.monsterList.get(i).body = null;
+                    game.levelFactory.monsterList.removeIndex(i);
+                }
+            }
             game.world.destroyBody(currentBody);
             System.out.println("Body Destroyed: " + currentBody.toString());
         }
-        controls.groundSensor.bodiesToBeRemoved.clear();
+        for (Body currentBody : controls.contacts.projectileBodiesToBeRemoved) {
+            for (int i = 0; i < game.projectileArray.size; i++) {
+                if (game.projectileArray.get(i).getBody() == currentBody) {
+                    game.projectileArray.get(i).setBody(null);
+                    game.projectileArray.removeIndex(i);
+                }
+            }
+            game.world.destroyBody(currentBody);
+            System.out.println("Body Destroyed: " + currentBody.toString());
+        }
+
+        controls.contacts.bodiesToBeRemoved.clear();
+        controls.contacts.projectileBodiesToBeRemoved.clear();
 
         controls.resetTheXVelocities();
 

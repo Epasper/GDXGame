@@ -1,11 +1,11 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
 
-public class PlayerProjectile extends Sprite {
+public class PlayerProjectile {
 
     boolean isAffectedByGravity;
     boolean splashDamage;
@@ -32,12 +32,21 @@ public class PlayerProjectile extends Sprite {
         if (playerCharacter.isFacingLeft) force = -forceMagnitude;
         else force = forceMagnitude;
 
-            body = shapeFactory.createCircle(BodyDef.BodyType.DynamicBody,
-                    playerCharacter.body.getPosition().x,
-                    playerCharacter.body.getPosition().y,
-                    radius, density);
-        body.setUserData("projectile");
-        this.getBody().applyForceToCenter(force, 0, true);
-        this.setTexture(texture);
+        body = shapeFactory.createCircle(BodyDef.BodyType.DynamicBody,
+                playerCharacter.body.getPosition().x,
+                playerCharacter.body.getPosition().y,
+                radius, density);
+        body.setBullet(true);
+        body.getFixtureList().get(0).setUserData("projectile");
+        this.getBody().applyLinearImpulse(force, 0, body.getPosition().x, body.getPosition().y, true);
+        //body.setTexture(texture);
+
+        Filter filter = new Filter();
+        filter.categoryBits = CollisionCategories.CATEGORY_PROJECTILE;
+        filter.maskBits = CollisionCategories.MASK_PROJECTILE;
+        body.getFixtureList().get(0).setFilterData(filter);
+        game.projectileArray.add(this);
+
     }
+
 }

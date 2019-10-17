@@ -12,13 +12,13 @@ public class Controls {
     int maxVelocity = 35;
     int jumpVelocity = 75;
 
-    Contacts groundSensor;
+    Contacts contacts;
 
     Controls(MyGame game) {
         this.game = game;
         playerCharacter = game.playerCharacter;
-        groundSensor = new Contacts(game, game.groundBody);
-        game.world.setContactListener(groundSensor);
+        contacts = new Contacts(game, game.groundBody);
+        game.world.setContactListener(contacts);
     }
 
     //todo integrate auto-scrolling of background when character reaches ~20% of the map (both left and right edge)
@@ -95,9 +95,9 @@ public class Controls {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.W) || (Gdx.input.isKeyPressed(Input.Keys.UP))) {
-            if (groundSensor.playerOnGround) {
+            if (contacts.playerOnGround) {
                 game.mainCharacterBody.setLinearVelocity(playerVelocity.x, jumpVelocity);
-                groundSensor.playerOnGround = false;
+                contacts.playerOnGround = false;
             }
         }
     }

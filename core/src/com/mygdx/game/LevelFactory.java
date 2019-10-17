@@ -123,7 +123,7 @@ public class LevelFactory {
         Body body = game.world.createBody(def);
         body.createFixture(poly, 2);
         poly.dispose();
-        body.setUserData("ground");
+        body.getFixtureList().get(0).setUserData("ground");
 
         Filter filter = new Filter();
         filter.categoryBits = CollisionCategories.CATEGORY_SCENERY;
