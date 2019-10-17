@@ -82,9 +82,16 @@ public class Controls {
 
         if (Gdx.input.isKeyPressed(Input.Keys.A) || (Gdx.input.isKeyPressed(Input.Keys.LEFT))) {
             game.mainCharacterBody.setLinearVelocity(-maxVelocity, playerVelocity.y);
+            game.playerCharacter.playerSprite.setTexture(game.playerCharacter.leftTexture);
+            game.playerCharacter.isFacingLeft = true;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D) || (Gdx.input.isKeyPressed(Input.Keys.RIGHT))) {
             game.mainCharacterBody.setLinearVelocity(maxVelocity, playerVelocity.y);
+            game.playerCharacter.playerSprite.setTexture(game.playerCharacter.rightTexture);
+            game.playerCharacter.isFacingLeft = false;
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.X)) {
+            PlayerProjectile projectile = new PlayerProjectile(game, playerCharacter);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.W) || (Gdx.input.isKeyPressed(Input.Keys.UP))) {

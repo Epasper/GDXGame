@@ -14,9 +14,14 @@ public class PlayerCharacter {
 
     int hitPoints;
 
+    public Texture leftTexture = new Texture("PlayerLeft.png");
+    public Texture rightTexture = new Texture("Player.png");
+
+    boolean isFacingLeft = true;
+
     ShapeFactory shapeFactory;
 
-    Sprite playerSprite = new Sprite(new Texture("Player.png"));
+    Sprite playerSprite = new Sprite(leftTexture);
 
     PlayerCharacter(MyGame game) {
         hitPoints = 50;
