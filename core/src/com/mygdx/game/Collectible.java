@@ -3,7 +3,11 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.utils.Array;
 
 public class Collectible extends Sprite {
 
@@ -13,6 +17,7 @@ public class Collectible extends Sprite {
     float positionX;
     float positionY;
     Texture collectibleTexture;
+    Array<Texture> collectibleAnimation;
 
     public Collectible(MyGame game, float positionX, float positionY, String texturePath) {
         super(new Texture(Gdx.files.internal(texturePath)));
@@ -20,6 +25,12 @@ public class Collectible extends Sprite {
         this.positionX = positionX;
         this.positionY = positionY;
         collectibleTexture = new Texture(texturePath);
+        collectibleAnimation = new Array<>();
+        for (int i = 1; i < 7; i++) {
+            Texture texture = new Texture("coinAn" + i + ".png");
+            System.out.println(texture.toString());
+            collectibleAnimation.add(texture);
+        }
         shapeFactory = new ShapeFactory(game);
         collectibleBody = shapeFactory.createCircle(BodyDef.BodyType.KinematicBody, positionX, positionY, 1, 0);
         this.setPosition(positionX, positionY);
@@ -47,7 +58,7 @@ public class Collectible extends Sprite {
 
     }
 
-    public void destroyBody () {
+    public void destroyBody() {
         game.world.destroyBody(this.collectibleBody);
     }
 

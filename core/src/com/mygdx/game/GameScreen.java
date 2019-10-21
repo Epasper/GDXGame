@@ -15,6 +15,8 @@ public class GameScreen extends ScreenAdapter {
     private MyGame game;
     private Controls controls;
 
+    private int currentAnimationFrame = 1;
+    int animationFps = 1;
 
     Stage gameStage;
 
@@ -72,13 +74,14 @@ public class GameScreen extends ScreenAdapter {
             System.out.println("Body Destroyed: " + currentBody.toString());
         }
         for (Body currentBody : controls.contacts.projectileBodiesToBeRemoved) {
-            for (int i = 0; i < game.projectileArray.size; i++) {
-                if (game.projectileArray.get(i).getBody() == currentBody) {
-                    game.projectileArray.get(i).setBody(null);
-                    game.projectileArray.removeIndex(i);
-                }
-            }
+            //for (int i = 0; i < game.projectileArray.size; i++) {
+            //if (game.projectileArray.get(i).getBody() == currentBody) {
+            //game.projectileArray.get(i).setBody(null);
+            //game.projectileArray.removeIndex(i);
+            // }
+            // }
             game.world.destroyBody(currentBody);
+            game.projectileArray.clear();
             System.out.println("Body Destroyed: " + currentBody.toString());
         }
 
@@ -123,8 +126,17 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void drawTheCoins() {
+
         for (Collectible currentCoin : game.levelFactory.coinsList) {
             final float spriteSize = 4f;
+            if (currentAnimationFrame > 5) currentAnimationFrame = 1;
+            System.out.println(currentAnimationFrame);
+            currentCoin.setTexture(currentCoin.collectibleAnimation.get(currentAnimationFrame));
+            animationFps++;
+            if (animationFps > 400) {
+                currentAnimationFrame++;
+                animationFps = 1;
+            }
             game.gameBatch.draw(currentCoin,
                     currentCoin.getX() - spriteSize / 2f,
                     currentCoin.getY() - spriteSize / 2f,

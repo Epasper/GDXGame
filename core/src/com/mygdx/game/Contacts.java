@@ -48,11 +48,13 @@ public class Contacts implements ContactListener {
         if (fixtureB.getUserData().toString().contains("projectile")) {
             System.out.println("Projectile destruction");
             projectileBodiesToBeRemoved.add(fixtureB.getBody());
+            System.out.println("List Length: " + projectileBodiesToBeRemoved.size);
         }
 
         if (fixtureA.getUserData().toString().contains("projectile")) {
             System.out.println("Projectile destruction");
             projectileBodiesToBeRemoved.add(fixtureA.getBody());
+            System.out.println("List Length: " + projectileBodiesToBeRemoved.size);
         }
     }
 
